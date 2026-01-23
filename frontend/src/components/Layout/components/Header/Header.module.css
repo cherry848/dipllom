@@ -1,0 +1,53 @@
+.header {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+    width: 140px;
+    height: 46px;
+}
+
+.expand_arrow {
+    width: 7px;
+    height: 7px;
+}
+
+.headerLeft {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.catalog {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #334155;
+    line-height: 100%;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.button {
+    font-family: "Inter", sans-serif;
+    background: none;
+    border: 1px solid #4338CA;
+    border-radius: 10px;
+    padding: 8px 0;
+    width: 100px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    color: #4F46E5;
+    font-size: 11px;
+    line-height: 100%;
+}
