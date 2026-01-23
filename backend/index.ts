@@ -1,25 +1,30 @@
-import express, { Request, Response, Application } from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
+import express from "express";
+import authRouter from "./routes/auth.routes";
+import { errorHandler } from "./middlewares/error.middleware";
 
-const app: Application = express();
-const PORT = process.env.PORT || 3000;
+dotenv.config();
 
-// Middleware
+const PORT = process.env.PORT ?? 3000;
+const MONGO_URL = process.env.MONGO_URL ?? "";
+
+const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// Роуты
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello TypeScript + Express!" });
-});
+app.use("/api/auth", authRouter);
 
-app.get("/api/users", (req: Request, res: Response) => {
-  res.json([
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
-  ]);
-});
+app.use(errorHandler);
 
-// Запуск сервера
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+
+  mongoose
+    .connect(MONGO_URL)
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
 });
