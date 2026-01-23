@@ -63,7 +63,7 @@ class AuthController {
 
     return res
       .cookie("refreshToken", tokens.refreshToken, REFRESH_COOKIE_OPTIONS)
-      .json({ message: "User login", accessToken: tokens.accessToken });
+      .json({ message: "User login", accessToken: tokens.accessToken, user });
   }
 
   async authorize(req: Request, res: Response) {
