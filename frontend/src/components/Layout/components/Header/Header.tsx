@@ -1,6 +1,10 @@
+import { useState } from "react";
 import styles from "./Header.module.css";
+import { Modal } from "../../../Modal/Modal";
+import { AuthModal } from "../../../AuthModal/AuthModal";
 
 export const Header = () => {
+  const [modal, setModal] = useState({ show: false, type: "login" });
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
@@ -15,9 +19,45 @@ export const Header = () => {
         </span>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.button}>Войти</button>
-        <button className={styles.button}>Регистрация</button>
+        <button
+          onClick={() => {
+            setModal({ show: true, type: "login" });
+          }}
+          className={styles.button}
+        >
+          Войти
+        </button>
+        <button
+          onClick={() => {
+            setModal({ show: true, type: "register" });
+          }}
+          className={styles.button}
+        >
+          Регистрация
+        </button>
       </div>
+      <Modal
+        show={modal.show}
+        onClose={() => {
+          setModal({ show: false, type: "login" });
+        }}
+      >
+        {modal.type === "login" ? (
+          <AuthModal
+            auth="login"
+            onClose={() => {
+              setModal({ show: false, type: "login" });
+            }}
+          />
+        ) : (
+          <AuthModal
+            auth="register"
+            onClose={() => {
+              setModal({ show: false, type: "login" });
+            }}
+          />
+        )}
+      </Modal>
     </div>
   );
 };
