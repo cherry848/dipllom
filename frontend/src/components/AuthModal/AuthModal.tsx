@@ -25,9 +25,13 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
         <Input type="password" />
       </div>
       <Button auth={auth} />
-      {auth === "login" && (
-        <span className={s.forgotPassword}>Забыли пароль?</span>
-      )}
+      <span
+        className={c(s.forgotPassword, {
+          [s.hidden]: auth === "register",
+        })}
+      >
+        Забыли пароль?
+      </span>
       <span
         className={c(s.authRedirectLink, {
           [s.loginLink]: auth === "register",

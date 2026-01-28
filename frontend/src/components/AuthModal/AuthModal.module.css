@@ -39,10 +39,16 @@
     font-size: 12px;
     line-height: 100%;
     color: #334155;
+    margin-top: 15px;
+    margin-bottom: 48px;
+}
+
+.forgotPassword.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .authRedirectLink {
-    margin-top: 46px;
     align-self: center;
     font-weight: 600;
     font-size: 16px;
