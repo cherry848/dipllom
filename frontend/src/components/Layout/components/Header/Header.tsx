@@ -3,8 +3,13 @@ import styles from "./Header.module.css";
 import { Modal } from "../../../Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
 
-export const Header = () => {
+type HeaderProps = {
+  isLoading: boolean;
+};
+
+export const Header = ({ isLoading }: HeaderProps) => {
   const [modal, setModal] = useState({ show: false, type: "login" });
+
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
@@ -18,24 +23,28 @@ export const Header = () => {
           />
         </span>
       </div>
-      <div className={styles.buttons}>
-        <button
-          onClick={() => {
-            setModal({ show: true, type: "login" });
-          }}
-          className={styles.button}
-        >
-          Войти
-        </button>
-        <button
-          onClick={() => {
-            setModal({ show: true, type: "register" });
-          }}
-          className={styles.button}
-        >
-          Регистрация
-        </button>
-      </div>
+
+      {!isLoading && (
+        <div className={styles.buttons}>
+          <button
+            onClick={() => {
+              setModal({ show: true, type: "login" });
+            }}
+            className={styles.button}
+          >
+            Войти
+          </button>
+          <button
+            onClick={() => {
+              setModal({ show: true, type: "register" });
+            }}
+            className={styles.button}
+          >
+            Регистрация
+          </button>
+        </div>
+      )}
+
       <Modal
         show={modal.show}
         onClose={() => {
