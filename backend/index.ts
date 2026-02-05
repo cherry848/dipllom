@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import express from "express";
 import authRouter from "./routes/auth.routes";
 import { errorHandler } from "./middlewares/error.middleware";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,6 +12,13 @@ const PORT = process.env.PORT ?? 3000;
 const MONGO_URL = process.env.MONGO_URL ?? "";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

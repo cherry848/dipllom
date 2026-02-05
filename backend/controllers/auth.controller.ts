@@ -20,7 +20,7 @@ class AuthController {
   async register(
     req: Request<{}, {}, AuthRegisterControllerData>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
       const { email, password } = req.body ?? {};
@@ -28,7 +28,7 @@ class AuthController {
       if (!email || !password)
         throw new AppError(
           "email и password обязательны",
-          ErrorCodes.INVALID_CREDENTIALS,
+          ErrorCodes.INVALID_CREDENTIALS
         );
 
       const user = await authService.register({ email, password });
@@ -54,7 +54,7 @@ class AuthController {
     if (!email || !password)
       throw new AppError(
         "email и password обязательны",
-        ErrorCodes.INVALID_CREDENTIALS,
+        ErrorCodes.INVALID_CREDENTIALS
       );
 
     const user = await authService.login({ email, password });
@@ -83,7 +83,9 @@ class AuthController {
     if (!refreshToken)
       throw new AppError("чет с токеном", ErrorCodes.TOKEN_ERROR);
 
-    const newTokens = authService.getTokens(refreshToken);
+    const { userId } = authService.verifyRefreshToken(refreshToken);
+
+    const newTokens = authService.getTokens(userId);
 
     return res
       .cookie("refreshToken", newTokens.refreshToken, REFRESH_COOKIE_OPTIONS)

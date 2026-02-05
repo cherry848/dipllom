@@ -1,7 +1,11 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Layout from "./components/Layout/Layout.tsx";
-import { AuthModal } from "./components/AuthModal/AuthModal.tsx";
-import { Modal } from "./components/Modal/Modal.tsx";
+import App from "./App.tsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
 
-createRoot(document.getElementById("root")!).render(<Layout />);
+createRoot(document.getElementById("root")!).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
