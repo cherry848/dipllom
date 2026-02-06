@@ -1,37 +1,29 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../types/user.types";
 import { userService } from "../services/user.service";
+import { queryObjects } from "node:v8";
 
 class UserController {
-  async updatePassword(
-    req: Request<{}, {}, User>,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async update(req: Request<{}, {}, User>, res: Response, next: NextFunction) {
     try {
-      const user = await userService.updatePassword(req);
-      res.json({ message: "Пароль был успешно обновлен", user });
+      const user = await userService.update(req.body);
+      res.json({
+        message: "Пользователь был обновлен",
+        user,
+      });
     } catch (error) {
       next(error);
     }
   }
 
-  async updateName(
-    req: Request<{}, {}, User>,
+  async uploadAvatar(
+    req: Request<{}, {}, {}, { _id: string }>,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const user = await userService.updateName(req);
-      res.json({ message: "Имя пользователя было успешно изменено!", user });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async uploadAvatar(req: Request, res: Response, next: NextFunction) {
-    try {
-      const user = await userService.uploadAvatar(req);
+      console.log(req.query._id);
+      const user = await userService.uploadAvatar(req.query._id, req.file);
       res.json({ message: "Аватар был успешно загружен", user });
     } catch (error) {
       next(error);

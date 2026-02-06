@@ -9,9 +9,13 @@ router.post("/auth/register", authController.register);
 router.post("/auth/login", authController.login);
 router.post("/auth/authorize", authController.authorize);
 router.post("/auth/refresh", authController.refresh);
-router.post("/me/password", userController.updatePassword);
-router.post("/me/name", userController.updateName);
-router.post("/me/avatar", upload.single("avatar"), userController.uploadAvatar);
+router.patch("/me/update", authCheckMiddleware, userController.update);
+router.patch(
+  "/me/avatar",
+  authCheckMiddleware,
+  upload.single("avatar"),
+  userController.uploadAvatar,
+);
 // пример роута с проверкой авторизации
 router.get("/test", authCheckMiddleware, (req, res, next) => {
   try {

@@ -12,54 +12,43 @@ class UserService {
     return `Пользователь${randomDigits}`;
   }
 
-  async updateName(req: Request<{}, {}, User>) {
-    const accessToken = getHeaderAccessToken(req);
-    if (!accessToken) {
-      throw new AppError("чет с токеном", ErrorCodes.TOKEN_ERROR);
+  async update(data: User) {
+    const updateData: Partial<User> = {};
+
+    if (data.name) {
+      updateData.name = data.name;
     }
-    const { id } = await authService.authorize(accessToken);
+
+    if (data.password) {
+      updateData.password = await bcrypt.hash(data.password, 10);
+    }
+
     const user = await userModel.findByIdAndUpdate(
-      id,
-      { name: req.body.name },
+      data._id,
+      { $set: updateData },
       { new: true, runValidators: true },
     );
+
+    if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
 
     return user;
   }
 
-  async updatePassword(req: Request<{}, {}, User>) {
-    const accessToken = getHeaderAccessToken(req);
-    if (!accessToken) {
-      throw new AppError("чет с токеном", ErrorCodes.TOKEN_ERROR);
-    }
-    const { id } = await authService.authorize(accessToken);
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user = await userModel.findByIdAndUpdate(
-      id,
-      { password: hashedPassword },
-      { new: true, runValidators: true },
-    );
-    return user;
-  }
-
-  async uploadAvatar(req: Request) {
-    if (!req.file) {
+  async uploadAvatar(_id: string, file: Express.Multer.File | undefined) {
+    if (!file) {
       throw new AppError("Отсутствует файл", ErrorCodes.INVALID_DATA);
     }
 
-    const accessToken = getHeaderAccessToken(req);
-    if (!accessToken) {
-      throw new AppError("чет с токеном", ErrorCodes.TOKEN_ERROR);
-    }
-    const { id } = await authService.authorize(accessToken);
-
-    const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+    const avatarUrl = `/uploads/avatars/${file.filename}`;
 
     const user = await userModel.findByIdAndUpdate(
-      id,
-      { avatar: avatarUrl },
+      _id,
+      { $set: { avatar: avatarUrl } },
       { new: true },
     );
+
+    if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
+
     return user;
   }
 }
