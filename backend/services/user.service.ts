@@ -12,19 +12,15 @@ class UserService {
     return `Пользователь${randomDigits}`;
   }
 
-  async update(data: User) {
-    const updateData: Partial<User> = {};
-
-    if (data.name) {
-      updateData.name = data.name;
-    }
+  async update(id: string, data: Partial<User>) {
+    const updateData = { ...data };
 
     if (data.password) {
       updateData.password = await bcrypt.hash(data.password, 10);
     }
 
     const user = await userModel.findByIdAndUpdate(
-      data._id,
+      id,
       { $set: updateData },
       { new: true, runValidators: true },
     );
@@ -34,11 +30,7 @@ class UserService {
     return user;
   }
 
-  async uploadAvatar(_id: string, file: Express.Multer.File | undefined) {
-    if (!file) {
-      throw new AppError("Отсутствует файл", ErrorCodes.INVALID_DATA);
-    }
-
+  async uploadAvatar(_id: string, file: Express.Multer.File) {
     const avatarUrl = `/uploads/avatars/${file.filename}`;
 
     const user = await userModel.findByIdAndUpdate(
