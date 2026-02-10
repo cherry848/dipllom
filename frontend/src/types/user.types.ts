@@ -6,8 +6,3 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
-
-export type UserLoginThunkReq = {
-  email: string;
-  password: string;
-};

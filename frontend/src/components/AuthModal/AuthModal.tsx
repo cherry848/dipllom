@@ -2,9 +2,8 @@ import c from "classnames";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import s from "./AuthModal.module.css";
-import { useAppDispatch } from "../../hooks/reduxHooks";
 import { useState } from "react";
-import { login } from "../../redux/slices/user.slice";
+import { useLoginMutation } from "../../redux/api";
 
 interface AuthModalProps {
   auth: "login" | "register";
@@ -12,13 +11,13 @@ interface AuthModalProps {
 }
 
 export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [login] = useLoginMutation();
 
-  const dispatch = useAppDispatch();
+  const [data, setData] = useState({ email: "", password: "" });
 
   const handleAuth = () => {
     if (auth === "login") {
-      dispatch(login(data));
+      login(data);
     } else {
       // dispatch(register(data));
     }

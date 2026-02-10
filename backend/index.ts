@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api", authRouter);
-app.use("/uploads", express.static("uploads"))
+app.use("/uploads", express.static("uploads"));
 
 app.use(errorHandler);
 
