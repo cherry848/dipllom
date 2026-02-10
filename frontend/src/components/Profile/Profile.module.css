@@ -1,0 +1,233 @@
+.container {
+    width: 1180px;
+    margin: 0 auto;
+}
+.ul {
+    margin-top: 15px;
+    display: flex;
+    list-style-type: none;
+    gap: 50px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    color: #9F9F9F;
+    border-bottom: 1px solid #D9D9D9;
+    padding-left: 40px;
+}
+
+.li {
+    border-bottom: 1px solid #334155;
+    color: #334155;
+    font-size: 18px;
+    padding-bottom: 12px;
+    line-height: 100%;
+}
+
+.profileWrapper {
+    display: flex;
+    gap: 28px;
+    margin-top: 46px;
+}
+
+.profileInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 17px;
+}
+
+.img {
+    margin-left: 49px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: grey;
+    margin-bottom: 33px;
+}
+
+.info {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+}
+
+.info span:first-child {
+    color: #334155;
+}
+
+.info span:last-child {
+    color: #000000;
+}
+
+.button {
+    background: #4F46E5;
+    border: 1px solid #4F46E5;
+    border-radius: 8px;
+    padding: 5.75px 38px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    color: #FFFFFF;
+    white-space: nowrap;
+}
+
+.profileStats {
+    padding: 25px 25px 30px 25px;
+    border: 1px solid #9F9F9F;
+    border-radius: 4px;
+    align-self: center;
+}
+
+.profileStatsGrids {
+    border-radius: 4px;
+    display: flex;
+    align-self: center;
+}
+
+.statsIcons {
+    width: 828px;
+    height: 102px;
+    display: grid;
+    grid-template-columns: repeat(48, 12px);
+    grid-template-rows: repeat(7, 12px);
+    grid-auto-flow: column;
+    gap: 5px;
+}
+
+.icon {
+    background: #D9D9D9;
+}
+
+.month {
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 100%;
+  color: #64748B;
+  margin-top: 10px;
+}
+
+.statsWrapper {
+    display: flex;
+    gap: 5px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wrapper span {
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 100%;
+    color: #64748B;
+}
+
+.grids1 {
+    display: grid;
+    grid-template-columns: repeat(3, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids2 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids3 {
+    display: grid;
+    grid-template-columns: repeat(5, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids4 {
+    display: grid;
+    grid-template-columns: repeat(3, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids5 {
+    display: grid;
+    grid-template-columns: repeat(5, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids6 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids7 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids8 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids9 {
+    display: grid;
+    grid-template-columns: repeat(5, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids10 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids11 {
+    display: grid;
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 5px;
+}
+.grids12 {
+    display: grid;
+    grid-template-columns: repeat(3, 12px);
+    grid-template-rows: repeat(7, 12px);
+    grid-auto-flow: column;
+    gap: 5px;
+}
+
+.grid {
+    width: 12px;
+    height: 12px;
+    background: #D9D9D9;
+}
+
+.profileSummary {
+    margin-top: 34px;
+    border-top: 1px solid #D9D9D9;
+    display: flex;
+    gap: 80px;
+    padding-top: 9px;
+}
+
+.profileSummaryMetrics span {
+    display: block;
+    margin: 0;
+}
+
+.profileSummaryMetrics span:first-child {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    color: #334155;
+}
+
+.profileSummaryMetrics span:last-child {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 100%;
+    color: #64748B;
+}
+

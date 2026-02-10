@@ -1,4 +1,5 @@
-import s from "./Input.module.css";
+import s from "./Input.module.css"
+
 
 interface InputProps {
   type: "email" | "password";
@@ -25,3 +26,4 @@ export const Input = ({ type, value, onValueChange }: InputProps) => {
     </div>
   );
 };
+
