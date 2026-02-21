@@ -2,6 +2,8 @@ import { useState } from "react";
 import styles from "./Header.module.css";
 import { Modal } from "../../../Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
+import c from "classnames";
 
 type HeaderProps = {
   isLoading: boolean;
@@ -9,6 +11,7 @@ type HeaderProps = {
 
 export const Header = ({ isLoading }: HeaderProps) => {
   const [modal, setModal] = useState({ show: false, type: "login" });
+  const { name, avatar } = useAppSelector((state) => state.user);
 
   return (
     <div className={styles.header}>
@@ -24,7 +27,23 @@ export const Header = ({ isLoading }: HeaderProps) => {
         </span>
       </div>
 
-      {!isLoading && (
+      {name ? (
+        <div
+          className={c(styles.avatarWrapper, {
+            [styles.bordered]: !avatar,
+          })}
+        >
+          {avatar ? (
+            <img
+              className={styles.avatar}
+              src={`http://localhost:3000${avatar}`}
+              alt="avatar"
+            />
+          ) : (
+            name[0].toUpperCase()
+          )}
+        </div>
+      ) : (
         <div className={styles.buttons}>
           <button
             onClick={() => {
@@ -44,7 +63,6 @@ export const Header = ({ isLoading }: HeaderProps) => {
           </button>
         </div>
       )}
-
       <Modal
         show={modal.show}
         onClose={() => {

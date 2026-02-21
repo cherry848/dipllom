@@ -15,6 +15,11 @@ router.patch(
   upload.single("avatar"),
   userController.update,
 );
+router.post(
+  "/me/:id/verify-password",
+  authCheckMiddleware,
+  userController.verifyPassword,
+);
 
 // пример роута с проверкой авторизации
 router.get("/test", authCheckMiddleware, (req, res, next) => {

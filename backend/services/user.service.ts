@@ -32,7 +32,7 @@ class UserService {
 
   async uploadAvatar(_id: string, file: Express.Multer.File) {
     const avatarUrl = `/uploads/avatars/${file.filename}`;
-
+    console.log(avatarUrl);
     const user = await userModel.findByIdAndUpdate(
       _id,
       { $set: { avatar: avatarUrl } },
@@ -42,6 +42,13 @@ class UserService {
     if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
 
     return user;
+  }
+
+  async verifyPassword(id: string, data: Pick<User, "password">) {
+    const user = await userModel.findById(id);
+    if (user) {
+      return bcrypt.compare(data.password, user.password);
+    }
   }
 }
 

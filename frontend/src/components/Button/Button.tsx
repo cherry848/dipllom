@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
-import s from "./Button.module.css";
 
 interface ButtonProps {
   auth?: "login" | "register";
   onClick?: () => void;
   children?: ReactNode;
+  className: string;
 }
 
-export const Button = ({ auth, onClick, children }: ButtonProps) => {
+export const Button = ({ auth, onClick, children, className }: ButtonProps) => {
   return (
-    <button className={s.button} onClick={onClick}>
+    <button className={className} onClick={onClick}>
       {auth === "login" && "Войти"}
       {auth === "register" && "Зарегистрироваться"}
       {children}

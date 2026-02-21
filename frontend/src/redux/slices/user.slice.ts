@@ -15,6 +15,7 @@ const INITIAL_STATE: UserState = {
   email: "",
   name: "",
   password: "",
+  avatar: null,
 };
 
 export const userSlice = createSlice({
@@ -26,10 +27,27 @@ export const userSlice = createSlice({
       api.endpoints.authorize.matchFulfilled,
       (_, { payload }) => {
         return { ...payload.user, isAuth: true };
-      }
+      },
     );
     build.addMatcher(api.endpoints.authorize.matchRejected, () => {
       return INITIAL_STATE;
     });
+    // build.addMatcher(api.endpoints.login.matchFulfilled, (_, { payload }) => {
+    //   return { ...payload.user, isAuth: true };
+    // });
+    // build.addMatcher(api.endpoints.update.matchFulfilled, (_, { payload }) => {
+    //   console.log(payload);
+    //   return { ...payload.user, isAuth: true };
+    // });
+    // build.addMatcher(
+    //   api.endpoints.register.matchFulfilled,
+    //   (state, { payload }) => {
+    //     console.log(payload);
+    //     return { ...state, ...payload.user };
+    //   },
+    // );
+    // build.addMatcher(api.endpoints.verifyPassword.matchFulfilled, (state) => {
+    //   return { ...state };
+    // });
   },
 });

@@ -3,7 +3,7 @@ import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import s from "./AuthModal.module.css";
 import { useState } from "react";
-import { useLoginMutation } from "../../redux/api";
+import { useLoginMutation, useRegisterMutation } from "../../redux/api";
 
 interface AuthModalProps {
   auth: "login" | "register";
@@ -12,6 +12,7 @@ interface AuthModalProps {
 
 export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
   const [login] = useLoginMutation();
+  const [register] = useRegisterMutation();
 
   const [data, setData] = useState({ email: "", password: "" });
 
@@ -19,7 +20,7 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
     if (auth === "login") {
       login(data);
     } else {
-      // dispatch(register(data));
+      register(data);
     }
   };
 
@@ -46,7 +47,14 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
           onValueChange={(password) => setData({ ...data, password })}
         />
       </div>
-      <Button auth={auth} onClick={handleAuth} />
+      <Button
+        className={s.button}
+        auth={auth}
+        onClick={() => {
+          handleAuth();
+          onClose();
+        }}
+      />
       <span
         className={c(s.forgotPassword, {
           [s.hidden]: auth === "register",

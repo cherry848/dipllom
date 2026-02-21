@@ -28,3 +28,7 @@
         line-height: 17px;
         color: #64748B;
 }
+
+.wrong {
+    border: 1px solid red;
+}

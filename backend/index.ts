@@ -5,6 +5,7 @@ import express from "express";
 import authRouter from "./routes/auth.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api", authRouter);
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);
 
