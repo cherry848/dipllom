@@ -20,7 +20,8 @@ export const api = createApi({
     // Auth
     authorize: build.query<AuthAuthorizeRes, void>({
       query: () => ({ url: "/auth/authorize", method: "POST" }),
-      providesTags: ["User"],
+      providesTags: (result) =>
+        result ? [{ type: "User", id: result.user._id }] : ["User"],
     }),
 
     login: build.mutation<AuthLoginRes, AuthLoginReq>({
@@ -44,7 +45,9 @@ export const api = createApi({
           data,
         };
       },
-      invalidatesTags: ["User"],
+      // invalidatesTags:  ["User"],
+      invalidatesTags: (result) =>
+        result ? [{ type: "User", id: result.user._id }] : ["User"],
     }),
     verifyPassword: build.mutation<VerifyPasswordRes, VerifyPasswordReq>({
       query: ({ id, password }) => {

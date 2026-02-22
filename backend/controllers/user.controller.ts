@@ -17,9 +17,6 @@ class UserController {
         user = await userService.uploadAvatar(req.params.id, req.file);
       }
 
-      console.log(req.params.id);
-      console.log(req.body?.password);
-
       user = await userService.update(req.params.id, req.body ?? {});
 
       res.json({
@@ -42,7 +39,7 @@ class UserController {
         console.log("Пароли сходятся");
         return res.status(200).json({ message: "Пароли сходятся" });
       }
-      res.status(401).json({ message: "Пароли не совпадают" });
+      res.status(600).json({ message: "Пароли не совпадают" });
     } catch (error) {
       next(error);
     }

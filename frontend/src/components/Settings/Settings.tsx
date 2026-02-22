@@ -37,7 +37,7 @@ export const Settings = () => {
       update({ id: _id, data: { password: data.password } });
     } catch (error) {
       const err = error as FetchBaseQueryError;
-      if (err.status === 401) setEnableChange(false);
+      if (err.status === 600) setEnableChange(false);
     }
   };
 

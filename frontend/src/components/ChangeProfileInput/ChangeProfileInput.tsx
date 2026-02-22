@@ -27,7 +27,7 @@ export const ChangeProfileInput = ({
         className={c(s.input, {
           [s.wrong]: !changeable,
         })}
-        type="password"
+        type="text"
         id="input"
         onClick={onClick}
         onChange={(e) => onChange?.(e.target.value)}
@@ -36,7 +36,7 @@ export const ChangeProfileInput = ({
         <input
           placeholder="Новый пароль"
           className={s.input}
-          type="password"
+          type="text"
           id="input"
           onChange={(e) => onValueChange?.(e.target.value)}
         />
