@@ -14,6 +14,7 @@ export const Settings = () => {
   const { _id, avatar, name } = useAppSelector((state) => state.user);
   const [enableChangePassword, setEnableChangePassword] = useState(true);
   const [changePasswordError, setChangePasswordError] = useState("");
+  const [newPasswordError, setNewPasswordError] = useState(true);
   const [enableChangeName, setEnableChangeName] = useState(true);
   const [enableUploadImage, setEnableUploadImage] = useState(true);
   const [update] = useUpdateMutation();
@@ -44,6 +45,11 @@ export const Settings = () => {
         id: _id,
         password: currentPassword,
       }).unwrap();
+
+      if (!data.password) {
+        setChangePasswordError("Пустое поле!");
+        return setNewPasswordError(false);
+      }
 
       update({ id: _id, data: { password: data.password } });
       setUserData({ ...data, password: "" });
@@ -116,6 +122,11 @@ export const Settings = () => {
           onValueChange={(password) => setUserData({ ...data, password })}
           type="password"
           error={changePasswordError}
+          newPasswordError={newPasswordError}
+          onNewPasswordClick={() => {
+            setChangePasswordError("");
+            setNewPasswordError(true);
+          }}
         />
         <Button onClick={changePassword} className={s.button}>
           Изменить пароль

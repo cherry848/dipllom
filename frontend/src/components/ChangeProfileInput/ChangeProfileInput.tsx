@@ -10,6 +10,8 @@ interface ChangeProfileInputProps {
   error?: string;
   value: string;
   currentValue?: string;
+  newPasswordError?: boolean;
+  onNewPasswordClick?: () => void;
 }
 
 export const ChangeProfileInput = ({
@@ -22,6 +24,8 @@ export const ChangeProfileInput = ({
   error,
   value,
   currentValue,
+  newPasswordError,
+  onNewPasswordClick,
 }: ChangeProfileInputProps) => {
   return (
     <div className={s.authForm}>
@@ -43,9 +47,12 @@ export const ChangeProfileInput = ({
       {type === "password" && (
         <input
           placeholder="Новый пароль"
-          className={s.input}
+          className={c(s.input, {
+            [s.wrong]: !newPasswordError,
+          })}
           type="password"
           id="input"
+          onClick={onNewPasswordClick}
           onChange={(e) => onValueChange?.(e.target.value)}
           value={value}
         />
