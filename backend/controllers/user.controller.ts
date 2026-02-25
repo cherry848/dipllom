@@ -36,7 +36,6 @@ class UserController {
     try {
       const user = await userService.verifyPassword(req.params.id, req.body);
       if (user) {
-        console.log("Пароли сходятся");
         return res.status(200).json({ message: "Пароли сходятся" });
       }
       res.status(600).json({ message: "Пароли не совпадают" });

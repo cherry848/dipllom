@@ -60,6 +60,12 @@
     border-radius: 50%;
 }
 
+.error {
+    align-self: center;
+    color: red;
+    font-weight: 600;
+}
+
 .imgWrapper:hover .img {
     opacity: 1;
 }

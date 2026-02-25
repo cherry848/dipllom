@@ -50,6 +50,8 @@
     font-weight: 700;
     font-size: 18px;
     line-height: 100%;
+    display: flex;
+    gap: 1px;
 }
 
 .info span:first-child {
