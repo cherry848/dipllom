@@ -9,6 +9,16 @@
     font-size: 18px;
     color: #334155;
     line-height: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.error {
+    align-self: self-end;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    color: red;
 }
 
 .input {
@@ -27,6 +37,10 @@
         font-size: 14px;
         line-height: 17px;
         color: #64748B;
+}
+
+.wrong {
+    border: 1px solid red;
 }
 
 

@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 18px;
+    color: #334155;
+    line-height: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.error {
+    align-self: self-end;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    color: red;
+}

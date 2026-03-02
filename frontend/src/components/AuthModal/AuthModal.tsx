@@ -4,6 +4,7 @@ import { Input } from "../Input/Input";
 import s from "./AuthModal.module.css";
 import { useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../../redux/api";
+import { Form } from "../Form/Form";
 
 interface AuthModalProps {
   auth: "login" | "register";
@@ -36,16 +37,20 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
         />
       </div>
       <div className={s.authContainer}>
-        <Input
-          type="email"
-          value={data.email}
-          onValueChange={(email) => setData({ ...data, email })}
-        />
-        <Input
-          type="password"
-          value={data.password}
-          onValueChange={(password) => setData({ ...data, password })}
-        />
+        <Form label="Email">
+          <Input
+            placeholder="Введите ваш email"
+            value={data.email}
+            onChange={(email) => setData({ ...data, email })}
+          />
+        </Form>
+        <Form label="Пароль">
+          <Input
+            placeholder="Введите ваш пароль"
+            value={data.password}
+            onChange={(password) => setData({ ...data, password })}
+          />
+        </Form>
       </div>
       <Button
         className={s.button}

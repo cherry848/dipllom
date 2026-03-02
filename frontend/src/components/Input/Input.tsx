@@ -1,29 +1,38 @@
-import s from "./Input.module.css"
-
+import c from "classnames";
+import s from "./Input.module.css";
 
 interface InputProps {
-  type: "email" | "password";
   value?: string;
-  onValueChange?: (value: string) => void;
+  onChange: (value: string) => void;
+  placeholder: string;
+  onClick?: () => void;
+  error?: boolean;
+  id?: string;
+  type?: string;
 }
 
-export const Input = ({ type, value, onValueChange }: InputProps) => {
+export const Input = ({
+  value,
+  onChange,
+  placeholder,
+  onClick,
+  error,
+  id,
+  type = "text",
+}: InputProps) => {
   return (
     <div className={s.authForm}>
-      <label className={s.label} htmlFor="input">
-        {type === "email" ? "Email" : "Password"}
-      </label>
       <input
+        onClick={onClick}
         value={value}
-        placeholder={
-          type === "email" ? "Введите ваш email" : "Введите ваш пароль"
-        }
-        className={s.input}
-        type="text"
-        id="input"
-        onChange={(e) => onValueChange?.(e.target.value)}
+        placeholder={placeholder}
+        className={c(s.input, {
+          [s.wrong]: error,
+        })}
+        type={type}
+        id={id}
+        onChange={(e) => onChange?.(e.target.value)}
       />
     </div>
   );
 };
-

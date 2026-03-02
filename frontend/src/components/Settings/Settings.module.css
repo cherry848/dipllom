@@ -81,6 +81,12 @@
     border: none;
 }
 
+.passwordForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .button {
     font-family: "Inter", sans-serif;
     background: none;

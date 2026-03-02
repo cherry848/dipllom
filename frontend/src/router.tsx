@@ -14,8 +14,8 @@ const router = createBrowserRouter([
         path: "test",
         element: <AuthRequiredProvider>Test</AuthRequiredProvider>,
       },
-      {path: "profile", element: <Profile></Profile>},
-      {path: "settings", element: <Settings/>}
+      { path: "profile", element: <Profile></Profile> },
+      { path: "settings", element: <Settings /> },
     ],
   },
 ]);

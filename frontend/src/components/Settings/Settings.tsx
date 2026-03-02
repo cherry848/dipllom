@@ -1,20 +1,20 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import { Button } from "../Button/Button";
-import { ChangeProfileInput } from "../ChangeProfileInput/ChangeProfileInput";
 import s from "./Settings.module.css";
 import { useUpdateMutation, useVerifyPasswordMutation } from "../../redux/api";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { List } from "../List/List";
 import type { ErrorResponse } from "../../types/types";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { Input } from "../Input/Input";
+import { Form } from "../Form/Form";
 
 export const Settings = () => {
   const [data, setUserData] = useState({ name: "", password: "" });
   const [currentPassword, setCurrentPassword] = useState("");
   const { _id, avatar, name } = useAppSelector((state) => state.user);
-  const [enableChangePassword, setEnableChangePassword] = useState(true);
-  const [changePasswordError, setChangePasswordError] = useState("");
-  const [newPasswordError, setNewPasswordError] = useState(true);
+  const [enableChangePassword, setEnableChangePassword] = useState("");
+  const [currentPasswordError, setCurrentPasswordError] = useState("");
   const [enableChangeName, setEnableChangeName] = useState(true);
   const [enableUploadImage, setEnableUploadImage] = useState(true);
   const [update] = useUpdateMutation();
@@ -38,8 +38,7 @@ export const Settings = () => {
   const changePassword = async () => {
     try {
       if (!currentPassword) {
-        setEnableChangePassword(false);
-        return setChangePasswordError("Пустое поле!");
+        return setCurrentPasswordError("Пустое поле!");
       }
       await verifyPassword({
         id: _id,
@@ -47,8 +46,7 @@ export const Settings = () => {
       }).unwrap();
 
       if (!data.password) {
-        setChangePasswordError("Пустое поле!");
-        return setNewPasswordError(false);
+        return setEnableChangePassword("Пустое поле!");
       }
 
       update({ id: _id, data: { password: data.password } });
@@ -58,8 +56,7 @@ export const Settings = () => {
       const err = error as FetchBaseQueryError;
       if (err.status === 600) {
         const data = err.data as ErrorResponse;
-        setEnableChangePassword(false);
-        setChangePasswordError(data.message);
+        setCurrentPasswordError(data.message);
       }
     }
   };
@@ -83,6 +80,7 @@ export const Settings = () => {
             ref={ref}
             className={s.file}
             type="file"
+            accept=".jpg,.jpeg,.png"
           />
 
           <img
@@ -94,40 +92,54 @@ export const Settings = () => {
         {!enableUploadImage && (
           <span className={s.error}>Загружать можно только картинки</span>
         )}
-        <ChangeProfileInput
-          value={data.name}
-          changeable={enableChangeName}
-          placeholder={name}
-          onChange={(name) => {
-            setUserData({ ...data, name });
-          }}
-          type="name"
-          onClick={() => {
-            setEnableChangeName(true);
-          }}
+        <Form
           error={!enableChangeName ? "Пустое поле" : ""}
-        />
+          label="Поменять имя"
+        >
+          <Input
+            id="Поменять имя"
+            value={data.name}
+            placeholder={name}
+            onChange={(name) => {
+              setUserData({ ...data, name });
+            }}
+            onClick={() => {
+              setEnableChangeName(true);
+            }}
+            error={!enableChangeName}
+          ></Input>
+        </Form>
         <Button onClick={changeName} className={s.button}>
           Изменить имя
         </Button>
-        <ChangeProfileInput
-          currentValue={currentPassword}
-          value={data.password}
-          onClick={() => {
-            setEnableChangePassword(true);
-            setChangePasswordError("");
-          }}
-          onChange={(password) => setCurrentPassword(password)}
-          changeable={enableChangePassword}
-          onValueChange={(password) => setUserData({ ...data, password })}
-          type="password"
-          error={changePasswordError}
-          newPasswordError={newPasswordError}
-          onNewPasswordClick={() => {
-            setChangePasswordError("");
-            setNewPasswordError(true);
-          }}
-        />
+
+        <Form
+          error={currentPasswordError || enableChangePassword}
+          label="Поменять пароль"
+        >
+          <Input
+            value={currentPassword}
+            onClick={() => {
+              setCurrentPasswordError("");
+              setEnableChangePassword("");
+            }}
+            id="Поменять пароль"
+            placeholder="Текущий пароль"
+            onChange={(password) => setCurrentPassword(password)}
+            error={!!currentPasswordError}
+            type="password"
+          ></Input>
+          <Input
+            onChange={(password) => setUserData({ ...data, password })}
+            placeholder="Новый пароль"
+            value={data.password}
+            onClick={() => {
+              setEnableChangePassword("");
+            }}
+            error={!!enableChangePassword}
+            type="password"
+          ></Input>
+        </Form>
         <Button onClick={changePassword} className={s.button}>
           Изменить пароль
         </Button>
