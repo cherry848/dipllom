@@ -21,6 +21,9 @@ export const Settings = () => {
   const [verifyPassword] = useVerifyPasswordMutation();
   const ref = useRef<HTMLInputElement>(null);
 
+  const [focusName, setFocusName] = useState(false);
+  const [focusPassword, setFocusPassword] = useState(false);
+
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -45,9 +48,13 @@ export const Settings = () => {
         password: currentPassword,
       }).unwrap();
 
+      setCurrentPasswordError("");
+
       if (!data.password) {
         return setEnableChangePassword("Пустое поле!");
       }
+
+      setEnableChangePassword("");
 
       update({ id: _id, data: { password: data.password } });
       setUserData({ ...data, password: "" });
@@ -93,7 +100,11 @@ export const Settings = () => {
           <span className={s.error}>Загружать можно только картинки</span>
         )}
         <Form
-          error={!enableChangeName ? "Пустое поле" : ""}
+          onFocus={() => {
+            setFocusName(true);
+          }}
+          onBlur={() => setFocusName(false)}
+          error={!enableChangeName && focusName === false ? "Пустое поле" : ""}
           label="Поменять имя"
         >
           <Input
@@ -103,10 +114,7 @@ export const Settings = () => {
             onChange={(name) => {
               setUserData({ ...data, name });
             }}
-            onClick={() => {
-              setEnableChangeName(true);
-            }}
-            error={!enableChangeName}
+            error={!enableChangeName && focusName === false}
           ></Input>
         </Form>
         <Button onClick={changeName} className={s.button}>
@@ -114,29 +122,32 @@ export const Settings = () => {
         </Button>
 
         <Form
-          error={currentPasswordError || enableChangePassword}
+          onFocus={() => {
+            setFocusPassword(true);
+          }}
+          onBlur={() => {
+            setFocusPassword(false);
+          }}
+          error={
+            focusPassword === true
+              ? ""
+              : currentPasswordError || enableChangePassword
+          }
           label="Поменять пароль"
         >
           <Input
             value={currentPassword}
-            onClick={() => {
-              setCurrentPasswordError("");
-              setEnableChangePassword("");
-            }}
             id="Поменять пароль"
             placeholder="Текущий пароль"
             onChange={(password) => setCurrentPassword(password)}
-            error={!!currentPasswordError}
+            error={!!currentPasswordError && focusPassword === false}
             type="password"
           ></Input>
           <Input
             onChange={(password) => setUserData({ ...data, password })}
             placeholder="Новый пароль"
             value={data.password}
-            onClick={() => {
-              setEnableChangePassword("");
-            }}
-            error={!!enableChangePassword}
+            error={!!enableChangePassword && focusPassword === false}
             type="password"
           ></Input>
         </Form>

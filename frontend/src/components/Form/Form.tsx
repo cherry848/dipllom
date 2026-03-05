@@ -4,11 +4,19 @@ interface FormProps {
   children: ReactNode;
   label?: string;
   error?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
-export const Form = ({ children, label, error }: FormProps) => {
+export const Form = ({
+  children,
+  label,
+  error,
+  onFocus,
+  onBlur,
+}: FormProps) => {
   return (
-    <form className={s.form} action="">
+    <form onFocus={onFocus} onBlur={onBlur} className={s.form} action="">
       {label && (
         <label className={s.label} htmlFor={label}>
           <span>{label}</span>
