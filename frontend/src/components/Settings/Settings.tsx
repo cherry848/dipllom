@@ -4,18 +4,37 @@ import s from "./Settings.module.css";
 import { useUpdateMutation, useVerifyPasswordMutation } from "../../redux/api";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { List } from "../List/List";
-import type { ErrorResponse } from "../../types/types";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Input } from "../Input/Input";
 import { Form } from "../Form/Form";
 
+const ERRORS = {
+  EMPTY: "Пустое поле!",
+  PASSWORD_MISMACHES: "Пароли не совпадают",
+};
+
+const USER_DATA = {
+  name: "",
+  password: "",
+  currentPassword: "",
+};
+
+const ERROR_STATE = {
+  nameForm: { error: "", errorInputId: "" },
+  passwordForm: { error: "", errorInputId: "" },
+};
+
 export const Settings = () => {
-  const [data, setUserData] = useState({ name: "", password: "" });
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [data, setUserData] = useState({
+    name: "",
+    password: "",
+    currentPassword: "",
+  });
+
   const { _id, avatar, name } = useAppSelector((state) => state.user);
-  const [enableChangePassword, setEnableChangePassword] = useState("");
-  const [currentPasswordError, setCurrentPasswordError] = useState("");
-  const [enableChangeName, setEnableChangeName] = useState(true);
+
+  const [errors, setErrors] = useState(ERROR_STATE);
+
   const [enableUploadImage, setEnableUploadImage] = useState(true);
   const [update] = useUpdateMutation();
   const [verifyPassword] = useVerifyPasswordMutation();
@@ -40,40 +59,56 @@ export const Settings = () => {
 
   const changePassword = async () => {
     try {
-      if (!currentPassword) {
-        return setCurrentPasswordError("Пустое поле!");
+      if (!data.currentPassword) {
+        return setErrors((prev) => ({
+          ...prev,
+          passwordForm: {
+            error: ERRORS.EMPTY,
+            errorInputId: "Поменять пароль",
+          },
+        }));
       }
+      setErrors(ERROR_STATE);
+
       await verifyPassword({
         id: _id,
-        password: currentPassword,
+        password: data.currentPassword,
       }).unwrap();
 
-      setCurrentPasswordError("");
-
       if (!data.password) {
-        return setEnableChangePassword("Пустое поле!");
+        return setErrors((prev) => ({
+          ...prev,
+          passwordForm: { error: ERRORS.EMPTY, errorInputId: "Новый пароль" },
+        }));
       }
 
-      setEnableChangePassword("");
-
-      update({ id: _id, data: { password: data.password } });
-      setUserData({ ...data, password: "" });
-      setCurrentPassword("");
+      await update({ id: _id, data: { password: data.password } });
+      setUserData(USER_DATA);
     } catch (error) {
       const err = error as FetchBaseQueryError;
       if (err.status === 600) {
-        const data = err.data as ErrorResponse;
-        setCurrentPasswordError(data.message);
+        setErrors((prev) => ({
+          ...prev,
+          passwordForm: {
+            error: ERRORS.PASSWORD_MISMACHES,
+            errorInputId: "Поменять пароль",
+          },
+        }));
       }
     }
   };
 
   const changeName = async () => {
-    if (!data.name) return setEnableChangeName(false);
+    if (!data.name) {
+      return setErrors((prev) => ({
+        ...prev,
+        nameForm: { error: ERRORS.EMPTY, errorInputId: "Поменять имя" },
+      }));
+    }
+    setErrors(ERROR_STATE);
 
     await update({ id: _id, data: { name: data.name } });
-    setEnableChangeName(true);
-    setUserData({ ...data, name: "" });
+    setUserData(USER_DATA);
   };
 
   return (
@@ -100,11 +135,14 @@ export const Settings = () => {
           <span className={s.error}>Загружать можно только картинки</span>
         )}
         <Form
-          onFocus={() => {
-            setFocusName(true);
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await changeName();
+            setFocusName(false);
           }}
-          onBlur={() => setFocusName(false)}
-          error={!enableChangeName && focusName === false ? "Пустое поле" : ""}
+          error={
+            !focusName && errors.nameForm.error ? errors.nameForm.error : ""
+          }
           label="Поменять имя"
         >
           <Input
@@ -112,48 +150,86 @@ export const Settings = () => {
             value={data.name}
             placeholder={name}
             onChange={(name) => {
+              setErrors(ERROR_STATE);
               setUserData({ ...data, name });
+              setFocusName(true);
             }}
-            error={!enableChangeName && focusName === false}
+            onFocus={() => {
+              setFocusName(true);
+            }}
+            onBlur={() => {
+              setFocusName(false);
+            }}
+            error={!!errors.nameForm.error && focusName === false}
           ></Input>
+          <Button
+            onMouseDown={async () => {
+              await changeName();
+              setFocusName(false);
+            }}
+            className={s.button}
+          >
+            Изменить имя
+          </Button>
         </Form>
-        <Button onClick={changeName} className={s.button}>
-          Изменить имя
-        </Button>
 
         <Form
-          onFocus={() => {
-            setFocusPassword(true);
-          }}
-          onBlur={() => {
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await changePassword();
             setFocusPassword(false);
           }}
           error={
-            focusPassword === true
-              ? ""
-              : currentPasswordError || enableChangePassword
+            !focusPassword && errors.passwordForm.error
+              ? errors.passwordForm.error
+              : ""
           }
           label="Поменять пароль"
         >
           <Input
-            value={currentPassword}
+            value={data.currentPassword}
             id="Поменять пароль"
             placeholder="Текущий пароль"
-            onChange={(password) => setCurrentPassword(password)}
-            error={!!currentPasswordError && focusPassword === false}
+            onChange={(currentPassword) => {
+              setErrors(ERROR_STATE);
+              setFocusPassword(true);
+              setUserData((prev) => ({ ...prev, currentPassword }));
+            }}
+            onFocus={() => setFocusPassword(true)}
+            onBlur={() => setFocusPassword(false)}
+            error={
+              errors.passwordForm.errorInputId === "Поменять пароль" &&
+              focusPassword === false
+            }
             type="password"
-          ></Input>
+          />
           <Input
-            onChange={(password) => setUserData({ ...data, password })}
+            id="Новый пароль"
+            onChange={(password) => {
+              setErrors(ERROR_STATE);
+              setFocusPassword(true);
+              setUserData((prev) => ({ ...prev, password }));
+            }}
+            onFocus={() => setFocusPassword(true)}
+            onBlur={() => setFocusPassword(false)}
             placeholder="Новый пароль"
             value={data.password}
-            error={!!enableChangePassword && focusPassword === false}
+            error={
+              errors.passwordForm.errorInputId === "Новый пароль" &&
+              focusPassword === false
+            }
             type="password"
-          ></Input>
+          />
+          <Button
+            onMouseDown={async () => {
+              await changePassword();
+              setFocusPassword(false);
+            }}
+            className={s.button}
+          >
+            Изменить пароль
+          </Button>
         </Form>
-        <Button onClick={changePassword} className={s.button}>
-          Изменить пароль
-        </Button>
       </div>
     </div>
   );

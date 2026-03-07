@@ -1,17 +1,20 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 
 interface ButtonProps {
-  auth?: "login" | "register";
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   children?: ReactNode;
   className: string;
+  onMouseDown?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Button = ({ auth, onClick, children, className }: ButtonProps) => {
+export const Button = ({
+  onClick,
+  onMouseDown,
+  children,
+  className,
+}: ButtonProps) => {
   return (
-    <button className={className} onClick={onClick}>
-      {auth === "login" && "Войти"}
-      {auth === "register" && "Зарегистрироваться"}
+    <button className={className} onMouseDown={onMouseDown} onClick={onClick}>
       {children}
     </button>
   );

@@ -9,6 +9,8 @@ interface InputProps {
   error?: boolean;
   id?: string;
   type?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const Input = ({
@@ -19,11 +21,15 @@ export const Input = ({
   error,
   id,
   type = "text",
+  onFocus,
+  onBlur,
 }: InputProps) => {
   return (
     <div className={s.authForm}>
       <input
         onClick={onClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={value}
         placeholder={placeholder}
         className={c(s.input, {

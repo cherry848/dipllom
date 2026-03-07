@@ -7,7 +7,7 @@ import { useLoginMutation, useRegisterMutation } from "../../redux/api";
 import { Form } from "../Form/Form";
 
 interface AuthModalProps {
-  auth: "login" | "register";
+  auth: "Войти" | "Зарегистрироваться";
   onClose: () => void;
 }
 
@@ -18,7 +18,7 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleAuth = () => {
-    if (auth === "login") {
+    if (auth === "Войти") {
       login(data);
     } else {
       register(data);
@@ -28,7 +28,7 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
   return (
     <div className={s.modal}>
       <div className={s.header}>
-        {auth === "login" ? "Войти" : "Зарегистрироваться"}
+        {auth === "Войти" ? auth : "Зарегистрироваться"}
         <img
           onClick={onClose}
           src="/close-button.svg"
@@ -54,25 +54,26 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
       </div>
       <Button
         className={s.button}
-        auth={auth}
         onClick={() => {
           handleAuth();
           onClose();
         }}
-      />
+      >
+        {auth}
+      </Button>
       <span
         className={c(s.forgotPassword, {
-          [s.hidden]: auth === "register",
+          [s.hidden]: auth === "Зарегистрироваться",
         })}
       >
         Забыли пароль?
       </span>
       <span
         className={c(s.authRedirectLink, {
-          [s.loginLink]: auth === "register",
+          [s.loginLink]: auth === "Зарегистрироваться",
         })}
       >
-        {auth === "login" ? "Создать аккаунт" : "Войти"}
+        {auth === "Войти" ? "Создать аккаунт" : "Войти"}
       </span>
     </div>
   );
