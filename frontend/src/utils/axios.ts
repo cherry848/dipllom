@@ -56,7 +56,7 @@ axios.interceptors.response.use(
           {
             baseURL: import.meta.env.VITE_BACK_URL,
             withCredentials: true,
-          }
+          },
         );
 
         localStorage.setItem("accessToken", accessToken);
@@ -70,7 +70,7 @@ axios.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export const axiosBaseQuery =

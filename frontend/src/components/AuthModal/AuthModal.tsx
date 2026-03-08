@@ -3,30 +3,32 @@ import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import s from "./AuthModal.module.css";
 import { useState } from "react";
-import { useLoginMutation } from "../../redux/api";
+import { useLoginMutation, useRegisterMutation } from "../../redux/api";
+import { Form } from "../Form/Form";
 
 interface AuthModalProps {
-  auth: "login" | "register";
+  auth: "Войти" | "Зарегистрироваться";
   onClose: () => void;
 }
 
 export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
   const [login] = useLoginMutation();
+  const [register] = useRegisterMutation();
 
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleAuth = () => {
-    if (auth === "login") {
+    if (auth === "Войти") {
       login(data);
     } else {
-      // dispatch(register(data));
+      register(data);
     }
   };
 
   return (
     <div className={s.modal}>
       <div className={s.header}>
-        {auth === "login" ? "Войти" : "Зарегистрироваться"}
+        {auth === "Войти" ? auth : "Зарегистрироваться"}
         <img
           onClick={onClose}
           src="/close-button.svg"
@@ -35,31 +37,43 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
         />
       </div>
       <div className={s.authContainer}>
-        <Input
-          type="email"
-          value={data.email}
-          onValueChange={(email) => setData({ ...data, email })}
-        />
-        <Input
-          type="password"
-          value={data.password}
-          onValueChange={(password) => setData({ ...data, password })}
-        />
+        <Form label="Email">
+          <Input
+            placeholder="Введите ваш email"
+            value={data.email}
+            onChange={(email) => setData({ ...data, email })}
+          />
+        </Form>
+        <Form label="Пароль">
+          <Input
+            placeholder="Введите ваш пароль"
+            value={data.password}
+            onChange={(password) => setData({ ...data, password })}
+          />
+        </Form>
       </div>
-      <Button auth={auth} onClick={handleAuth} />
+      <Button
+        className={s.button}
+        onClick={() => {
+          handleAuth();
+          onClose();
+        }}
+      >
+        {auth}
+      </Button>
       <span
         className={c(s.forgotPassword, {
-          [s.hidden]: auth === "register",
+          [s.hidden]: auth === "Зарегистрироваться",
         })}
       >
         Забыли пароль?
       </span>
       <span
         className={c(s.authRedirectLink, {
-          [s.loginLink]: auth === "register",
+          [s.loginLink]: auth === "Зарегистрироваться",
         })}
       >
-        {auth === "login" ? "Создать аккаунт" : "Войти"}
+        {auth === "Войти" ? "Создать аккаунт" : "Войти"}
       </span>
     </div>
   );

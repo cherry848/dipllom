@@ -15,6 +15,7 @@ const INITIAL_STATE: UserState = {
   email: "",
   name: "",
   password: "",
+  avatar: null,
 };
 
 export const userSlice = createSlice({
@@ -26,7 +27,7 @@ export const userSlice = createSlice({
       api.endpoints.authorize.matchFulfilled,
       (_, { payload }) => {
         return { ...payload.user, isAuth: true };
-      }
+      },
     );
     build.addMatcher(api.endpoints.authorize.matchRejected, () => {
       return INITIAL_STATE;
