@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import express from "express";
 import authRouter from "./routes/auth.routes";
+import coursesRouter from "./routes/courses.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
 import path from "path";
@@ -18,7 +19,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api", authRouter);
+app.use("/api", coursesRouter);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);

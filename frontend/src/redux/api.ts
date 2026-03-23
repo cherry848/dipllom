@@ -11,6 +11,8 @@ import type {
   AuthLoginRes,
   AuthRegisterRes,
 } from "../types/auth.types";
+import type { BaseSort } from "../types/types";
+import type { Course } from "../types/course.types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -33,6 +35,8 @@ export const api = createApi({
       query: (data) => ({ url: "/auth/register", method: "POST", data }),
       invalidatesTags: ["User"],
     }),
+
+    // User
 
     update: build.mutation<
       UserUpdateRes,
@@ -58,6 +62,12 @@ export const api = createApi({
         };
       },
     }),
+
+    // Courses
+
+    getCourses: build.query<Course[], BaseSort>({
+      query: (params) => ({ url: "courses", params }),
+    }),
   }),
 });
 
@@ -67,4 +77,5 @@ export const {
   useRegisterMutation,
   useUpdateMutation,
   useVerifyPasswordMutation,
+  useGetCoursesQuery,
 } = api;

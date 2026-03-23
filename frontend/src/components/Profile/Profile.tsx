@@ -1,12 +1,12 @@
 import s from "../Profile/Profile.module.css";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import { Button } from "../Button/Button";
+import { Button } from "../shared/Button/Button";
 import { useNavigate } from "react-router";
 import { List } from "../List/List";
 
 export const Profile = () => {
   const { createdAt, email, name, avatar } = useAppSelector(
-    (state) => state.user,
+    (state) => state.user
   );
 
   const navigate = useNavigate();

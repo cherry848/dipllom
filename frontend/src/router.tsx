@@ -3,13 +3,14 @@ import Layout from "./components/Layout";
 import AuthRequiredProvider from "./utils/AuthRequiredProvider";
 import { Profile } from "./components/Profile/Profile";
 import { Settings } from "./components/Settings/Settings";
+import { MainPage } from "./components/pages/MainPage/MainPage";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     path: "/",
     children: [
-      { element: "", path: "/" },
+      { element: <MainPage />, index: true },
       {
         path: "test",
         element: <AuthRequiredProvider>Test</AuthRequiredProvider>,

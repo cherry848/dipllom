@@ -3,14 +3,9 @@ import s from "./layout.module.css";
 import { Header } from "./components/Header/Header";
 import Loading from "../Loading";
 import { useAuthorizeQuery } from "../../redux/api";
-import { useAppSelector } from "../../hooks/reduxHooks";
 
 const Layout = () => {
   const { isLoading } = useAuthorizeQuery();
-
-  // пример как брать юзера
-  const user = useAppSelector((state) => state.user);
-  console.log(user);
 
   return (
     <div className={s.container}>
