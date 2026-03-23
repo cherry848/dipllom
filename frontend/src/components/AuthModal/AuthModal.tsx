@@ -1,10 +1,10 @@
 import c from "classnames";
-import { Button } from "../Button/Button";
-import { Input } from "../Input/Input";
+import { Button } from "../shared/Button/Button";
+import { Input } from "../shared/Input/Input";
 import s from "./AuthModal.module.css";
 import { useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../../redux/api";
-import { Form } from "../Form/Form";
+import { Form } from "../shared/Form/Form";
 
 interface AuthModalProps {
   auth: "Войти" | "Зарегистрироваться";

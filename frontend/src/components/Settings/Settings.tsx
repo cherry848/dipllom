@@ -1,12 +1,12 @@
 import { useRef, useState, type ChangeEvent } from "react";
-import { Button } from "../Button/Button";
+import { Button } from "../shared/Button/Button";
 import s from "./Settings.module.css";
 import { useUpdateMutation, useVerifyPasswordMutation } from "../../redux/api";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { List } from "../List/List";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Input } from "../Input/Input";
-import { Form } from "../Form/Form";
+import { Input } from "../shared/Input/Input";
+import { Form } from "../shared/Form/Form";
 
 const ERRORS = {
   EMPTY: "Пустое поле!",

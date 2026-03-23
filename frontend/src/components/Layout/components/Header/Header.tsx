@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Header.module.css";
-import { Modal } from "../../../Modal/Modal";
+import { Modal } from "../../../shared/Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import c from "classnames";

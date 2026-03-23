@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  color: #334155;
+}
+
+.arrow_prev {
+  width: 26px !important;
+  height: 56px !important;
+}
+
+.arrow_prev.disable {
+  cursor: default;
+}
+
+.arrow_prev.disable path {
+  stroke: #d9d9d9;
+}
+
+.slider :global(.slick-prev) {
+  left: -76px !important;
+}
+
+.slider :global(.slick-next) {
+  right: -76px !important;
+}
+
+.arrow_prev svg {
+  position: absolute;
+  inset: 0;
+}
+
+.arrow_prev.rotate {
+  transform: translate(0, -50%) rotate(180deg);
+}
+
+.slider :global(.slick-slide) {
+  padding: 0 40px;
+}
+
+.slider :global(.slick-list) {
+  margin: 0 -40px;
+}
+
+.link {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 100%;
+  color: #334155;
+  text-decoration: underline;
+  text-align: center;
+}
