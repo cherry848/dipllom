@@ -71,14 +71,14 @@ export const Header = ({ isLoading }: HeaderProps) => {
       >
         {modal.type === "login" ? (
           <AuthModal
-            auth="login"
+            auth="Войти"
             onClose={() => {
               setModal({ show: false, type: "login" });
             }}
           />
         ) : (
           <AuthModal
-            auth="register"
+            auth="Зарегистрироваться"
             onClose={() => {
               setModal({ show: false, type: "login" });
             }}

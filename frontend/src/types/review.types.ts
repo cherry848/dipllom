@@ -1,3 +1,5 @@
+import type { User } from "./user.types";
+
 export type Review = {
   _id: string;
   courseId: string;
@@ -7,3 +9,5 @@ export type Review = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ReviewWithAuthor = Omit<Review, "userId"> & { author: User };

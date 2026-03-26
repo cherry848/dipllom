@@ -4,6 +4,7 @@ import AuthRequiredProvider from "./utils/AuthRequiredProvider";
 import { Profile } from "./components/Profile/Profile";
 import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
+import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       },
       { path: "profile", element: <Profile></Profile> },
       { path: "settings", element: <Settings /> },
+      {
+        path: "course/:id",
+        children: [{ path: "info", element: <CourseInfoPage /> }],
+      },
     ],
   },
 ]);

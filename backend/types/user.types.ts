@@ -4,6 +4,7 @@ export type User = {
   password: string;
   name: string;
   avatar: string | null;
+  activeCourseIds: string[];
   createdAt: Date;
   updatedAt: Date;
 };

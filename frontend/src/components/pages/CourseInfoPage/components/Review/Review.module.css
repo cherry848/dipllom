@@ -1,0 +1,29 @@
+.container {
+  padding: 25px 20px;
+  border: 1px solid #64748b;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rating_stars > div {
+  width: 28px;
+  height: 28px;
+}
+
+.text {
+  margin: 16px 0 32px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: #334155;
+}
+
+.author_link {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: #4f46e5;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}

@@ -1,3 +1,6 @@
+import type { ReviewWithAuthor } from "./review.types";
+import type { User } from "./user.types";
+
 export type Course = {
   _id: string;
   createdAt: Date;
@@ -8,4 +11,10 @@ export type Course = {
   rating: number;
   tags: string[];
   reviews: string[];
+};
+
+export type GetCourseRes = {
+  course: Course;
+  author: User;
+  reviews: ReviewWithAuthor[];
 };

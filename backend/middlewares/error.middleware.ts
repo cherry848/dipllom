@@ -7,6 +7,7 @@ const STATUS_BY_CODE = new Map<ErrorCodes, number>([
   [ErrorCodes.USER_NOT_FOUND, 404],
   [ErrorCodes.TOKEN_ERROR, 401],
   [ErrorCodes.INVALID_CREDENTIALS, 400],
+  [ErrorCodes.COURSE_NOT_FOUND, 666],
 ]);
 
 const ERROR_MESSAGE_BY_CODE = new Map<ErrorCodes, string>([
@@ -14,6 +15,7 @@ const ERROR_MESSAGE_BY_CODE = new Map<ErrorCodes, string>([
   [ErrorCodes.USER_NOT_FOUND, "User not found"],
   [ErrorCodes.TOKEN_ERROR, "Not authenticated"],
   [ErrorCodes.INVALID_CREDENTIALS, "Invalid email or password"],
+  [ErrorCodes.COURSE_NOT_FOUND, "Course not found"],
 ]);
 
 const DEFAULT_STATUS = 500;
@@ -23,7 +25,7 @@ export const errorHandler = (
   error: Error,
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   console.log("error middleware", error);
 

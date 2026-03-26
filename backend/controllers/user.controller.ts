@@ -8,7 +8,7 @@ class UserController {
   async update(
     req: Request<{ id: string }, {}, ReqBodyType<User>>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
       let user;
@@ -31,7 +31,7 @@ class UserController {
   async verifyPassword(
     req: Request<{ id: string }, {}, Pick<User, "password">>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
       const user = await userService.verifyPassword(req.params.id, req.body);
