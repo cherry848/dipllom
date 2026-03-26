@@ -1,6 +1,3 @@
-import { NextFunction, Request, Response } from "express";
-import { authService } from "../services/auth.service";
-import { getHeaderAccessToken } from "../utils/jwt.utils";
 import { AppError, ErrorCodes } from "../appError";
 import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
@@ -22,7 +19,7 @@ class UserService {
     const user = await userModel.findByIdAndUpdate(
       id,
       { $set: updateData },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
 
     if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
@@ -36,7 +33,7 @@ class UserService {
     const user = await userModel.findByIdAndUpdate(
       _id,
       { $set: { avatar: avatarUrl } },
-      { new: true },
+      { new: true }
     );
 
     if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
@@ -49,6 +46,16 @@ class UserService {
     if (user) {
       return bcrypt.compare(data.password, user.password);
     }
+  }
+
+  async getUserById(id: string): Promise<User> {
+    const user = await userModel.findById(id);
+
+    if (!user) {
+      throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
+    }
+
+    return user;
   }
 }
 

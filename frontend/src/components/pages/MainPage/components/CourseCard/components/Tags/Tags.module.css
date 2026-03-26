@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 100%;
+  color: #64748b;
+}
