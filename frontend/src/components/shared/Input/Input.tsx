@@ -35,7 +35,7 @@ export const Input = ({
   icon,
 }: InputProps) => {
   return (
-    <label className={c(s.container, classNames?.container)}>
+    <label className={c(classNames?.container)}>
       {!!icon && <div className={s.icon}>{icon}</div>}
 
       <input
@@ -44,7 +44,7 @@ export const Input = ({
         onBlur={onBlur}
         value={value}
         placeholder={placeholder}
-        className={c(s.input, classNames?.input, {
+        className={c(classNames?.input, {
           [s.wrong]: error,
         })}
         type={type}

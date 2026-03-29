@@ -5,6 +5,7 @@ import { Profile } from "./components/Profile/Profile";
 import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
 import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
+import { Catalog } from "./components/Catalog/Catalog";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
         path: "course/:id",
         children: [{ path: "info", element: <CourseInfoPage /> }],
       },
+      { path: "catalog", element: <Catalog /> },
     ],
   },
 ]);

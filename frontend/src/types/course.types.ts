@@ -1,4 +1,5 @@
 import type { ReviewWithAuthor } from "./review.types";
+import type { Pagination } from "./types";
 import type { User } from "./user.types";
 
 export type Course = {
@@ -9,6 +10,10 @@ export type Course = {
   img: string;
   desc: string;
   rating: number;
+  language: string;
+  category: string;
+  userId: string;
+  users: string[];
   tags: string[];
   reviews: string[];
 };
@@ -18,3 +23,19 @@ export type GetCourseRes = {
   author: User;
   reviews: ReviewWithAuthor[];
 };
+
+export type GetCatalogCoursesRes = {
+  data: Course[];
+  pagination: Pagination;
+};
+
+export type GetCatalogCoursesReq = Partial<{
+  search: string;
+  category: string[];
+  language: string[];
+  duration: string[];
+  sortBy: string;
+  order: string;
+  page: number;
+  limit: 9;
+}>;
