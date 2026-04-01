@@ -1,4 +1,4 @@
-import { Star } from "../../icons/Star/Star";
+import { Star } from "../../../../../icons/Star/Star";
 import s from "../Course/Course.module.css";
 
 interface CourseProps {

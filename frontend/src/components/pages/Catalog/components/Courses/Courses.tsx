@@ -1,7 +1,7 @@
 import { Course } from "../Course/Course";
-import type { Course as CourseType } from "../../types/course.types";
+import type { Course as CourseType } from "../../../../../types/course.types";
 import s from "../Courses/Courses.module.css";
-import type { Pagination } from "../../types/types";
+import type { Pagination } from "../../../../../types/types";
 import c from "classnames";
 
 interface CoursesProps {

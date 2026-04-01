@@ -26,8 +26,8 @@ export const SortFIlter = ({
     >
       <label>{label}</label>
       <div className={s.pointerContainer}>
-        <Pointer clicked={direction === "asc"} />
         <Pointer clicked={direction === "desc"} />
+        <Pointer clicked={direction === "asc"} />
       </div>
     </div>
   );

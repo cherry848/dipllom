@@ -5,7 +5,7 @@ import { Profile } from "./components/Profile/Profile";
 import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
 import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
-import { Catalog } from "./components/Catalog/Catalog";
+import { Catalog } from "./components/pages/Catalog/Catalog";
 
 const router = createBrowserRouter([
   {

@@ -1,8 +1,8 @@
 import s from "../Sidebar/Sidebar.module.css";
 
-import { FilterGroup } from "../FilterGroup/FIlterGroup";
+import { FilterGroup } from "../pages/Catalog/components/FilterGroup/FIlterGroup";
 import { SortFIlter } from "../SortFilter/SortFilter";
-import { FILTERS, type Filter, type Filters } from "../Catalog/Catalog";
+import { FILTERS, type Filter, type Filters } from "../pages/Catalog/Catalog";
 import { Form } from "../shared/Form/Form";
 import { Input } from "../shared/Input/Input";
 import { Button } from "../shared/Button/Button";
@@ -77,7 +77,6 @@ export const Sidebar = ({
           Искать
         </Button>
       </div>
-      <div className={s.catalog}></div>
     </>
   );
 };

@@ -1,8 +1,9 @@
-import { Courses } from "../Courses/Courses";
-import { Sidebar } from "../Sidebar/Sidebar";
+import { Courses } from "./components/Courses/Courses";
+import { Sidebar } from "../../Sidebar/Sidebar";
 import s from "../Catalog/Catalog.module.css";
 import { useEffect, useState } from "react";
-import { useLazyGetCatalogCoursesQuery } from "../../redux/api";
+import { useLazyGetCatalogCoursesQuery } from "../../../redux/api";
+import { Container } from "../../shared/Container/Container";
 
 export const FILTERS = [
   {
@@ -114,54 +115,53 @@ export const Catalog = () => {
     });
   };
 
-  const searchSubmit = async () => {
-    getCourses({ search });
+  const buildQuery = () => {
+    const body: BuildQueryType = {};
+
+    const category = [];
+    if (filters.web) category.push(FILTERS[0].options[0].label);
+    if (filters.games) category.push(FILTERS[0].options[1].label);
+    if (filters.mobile) category.push(FILTERS[0].options[2].label);
+
+    const duration = [];
+    if (filters.short) duration.push(FILTERS[1].options[0].label);
+    if (filters.medium) duration.push(FILTERS[1].options[1].label);
+    if (filters.long) duration.push(FILTERS[1].options[2].label);
+
+    const language = [];
+    if (filters.python) language.push(FILTERS[2].options[0].label);
+    if (filters.java) language.push(FILTERS[2].options[1].label);
+    if (filters.cpp) language.push(FILTERS[2].options[2].label);
+
+    if (category.length) body.category = category;
+    if (duration.length) body.duration = duration;
+    if (language.length) body.language = language;
+
+    if (sort.id && sort.direction) {
+      body.sortBy = sort.id;
+      body.order = sort.direction;
+    }
+
+    if (search) body.search = search;
+
+    return body;
   };
 
   const togglePage = (page: number) => {
     setPage(page);
   };
 
-  useEffect(() => {
-    const buildQuery = () => {
-      const body: BuildQueryType = {};
-
-      const category = [];
-      if (filters.web) category.push(FILTERS[0].options[0].label);
-      if (filters.games) category.push(FILTERS[0].options[1].label);
-      if (filters.mobile) category.push(FILTERS[0].options[2].label);
-
-      const duration = [];
-      if (filters.short) duration.push(FILTERS[1].options[0].label);
-      if (filters.medium) duration.push(FILTERS[1].options[1].label);
-      if (filters.long) duration.push(FILTERS[1].options[2].label);
-
-      const language = [];
-      if (filters.python) language.push(FILTERS[2].options[0].label);
-      if (filters.java) language.push(FILTERS[2].options[1].label);
-      if (filters.cpp) language.push(FILTERS[2].options[2].label);
-
-      if (category.length) body.category = category;
-      if (duration.length) body.duration = duration;
-      if (language.length) body.language = language;
-
-      if (sort.id && sort.direction) {
-        body.sortBy = sort.id;
-        body.order = sort.direction;
-      }
-
-      if (search) body.search = search;
-
-      if (page) body.page = page;
-
-      return body;
-    };
-
+  const searchSubmit = async () => {
     getCourses(buildQuery());
-  }, [getCourses, filters, sort, page]);
+  };
+
+  useEffect(() => {
+    getCourses({ page });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
-    <div className={s.catalog}>
+    <Container className={s.catalog}>
       <Sidebar
         onClick={searchSubmit}
         handleSearchChanges={setSearch}
@@ -180,6 +180,6 @@ export const Catalog = () => {
           courses={data}
         />
       )}
-    </div>
+    </Container>
   );
 };

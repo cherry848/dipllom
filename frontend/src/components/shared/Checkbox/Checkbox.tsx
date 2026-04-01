@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import s from "../Checkbox/Checkbox.module.css";
 import c from "classnames";
-import type { Filter } from "../Catalog/Catalog";
+import type { Filter } from "../../pages/Catalog/Catalog";
 
 interface CheckboxProps {
   children?: ReactNode;

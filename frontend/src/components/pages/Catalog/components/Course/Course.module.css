@@ -1,12 +1,13 @@
 .course {
-    width: 300px;
-    height: 200px;
+    min-height: 200px;
+    max-width: 300px;
     display: flex;
     justify-content: space-between;
     gap: 40px;
     padding: 10px 10px 10px 15px;
     border: 1px solid #334155;
     border-radius: 8px;
+    flex: 1 0 0;
 }
 
 .courseInfo {

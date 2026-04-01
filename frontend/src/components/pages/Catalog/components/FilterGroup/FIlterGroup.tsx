@@ -1,6 +1,6 @@
-import { Checkbox } from "../Checkbox/Checkbox";
+import { Checkbox } from "../../../../shared/Checkbox/Checkbox";
 import s from "../FilterGroup/FilterGroup.module.css";
-import type { Filter, Filters } from "../Catalog/Catalog";
+import type { Filter, Filters } from "../../Catalog";
 
 export interface FilterGroupProps {
   title: string;
