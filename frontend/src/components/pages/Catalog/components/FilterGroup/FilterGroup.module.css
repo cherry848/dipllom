@@ -1,0 +1,15 @@
+
+
+.checkboxFilter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 8px;
+    line-height: 100%;
+    color: #334155;
+}
+

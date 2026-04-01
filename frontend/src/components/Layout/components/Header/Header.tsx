@@ -6,7 +6,7 @@ import { useAppSelector } from "../../../../hooks/reduxHooks";
 import c from "classnames";
 
 type HeaderProps = {
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 export const Header = ({ isLoading }: HeaderProps) => {

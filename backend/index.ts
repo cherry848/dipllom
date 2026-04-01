@@ -7,6 +7,7 @@ import coursesRouter from "./routes/courses.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
 import path from "path";
+import courseModel from "./models/course.model";
 
 dotenv.config();
 

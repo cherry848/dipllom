@@ -3,6 +3,8 @@ import { authController } from "../controllers/auth.controller";
 import { authCheckMiddleware } from "../middlewares/authCheck.middleware";
 import { upload } from "../middlewares/upload.middleware";
 import { userController } from "../controllers/user.controller";
+import { courseController } from "../controllers/course.controller";
+import { reviewController } from "../controllers/review.controller";
 const router = Router();
 
 router.post("/auth/register", authController.register);
@@ -20,6 +22,21 @@ router.post(
   authCheckMiddleware,
   userController.verifyPassword,
 );
+
+// router.post("/me/:id/course", authCheckMiddleware, courseController.create);
+
+// router.post(
+//   "/me/:id/img",
+//   authCheckMiddleware,
+//   upload.single("avatar"),
+//   courseController.uploadImage,
+// );
+
+// router.post("/me/:id/review", authCheckMiddleware, reviewController.save);
+
+// router.get("/me/:id/reviews", authCheckMiddleware, reviewController.getAll);
+
+router.post("/courses", courseController.getAll);
 
 // пример роута с проверкой авторизации
 router.get("/test", authCheckMiddleware, (req, res, next) => {

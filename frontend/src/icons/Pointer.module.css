@@ -1,0 +1,9 @@
+.pointer {
+
+}
+
+.pointer:first-of-type {
+    color: #334155;
+    transform: scaleY(-1);
+}
+

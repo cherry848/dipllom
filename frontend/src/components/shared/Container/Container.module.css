@@ -1,6 +1,8 @@
 .container {
   width: 100%;
   max-width: 1440px;
+  flex-grow: 1;
+  height: 100%;
 }
 
 .container.center {
