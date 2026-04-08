@@ -56,11 +56,23 @@ class AuthService {
   async authorize(accessToken: string) {
     const { userId } = this.verifyAccessToken(accessToken);
 
-    const user = await userModel.findById(userId);
+    const user = await userModel
+      .findById(userId)
+      .populate("coursesProgress.courseId", "name img desc rating");
 
     if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
 
-    return user;
+    const userObj = user.toObject();
+
+    // 🔥 преобразуем courseId → course
+    (userObj as any).coursesProgress = userObj.coursesProgress.map(
+      (item: any) => ({
+        course: item.courseId,
+        progress: item.progress,
+      }),
+    );
+
+    return userObj;
   }
 
   getTokens(userId: string): AuthGetTokensServiceReturnData {

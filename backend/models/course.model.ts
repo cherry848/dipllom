@@ -4,7 +4,7 @@ import { Course } from "../types/course.types";
 const CourseSchema = new Schema<Course>(
   {
     name: { type: String, required: true },
-    authorId: { type: Schema.Types.ObjectId, ref: "Users" },
+    authorId: { type: Schema.Types.ObjectId, ref: "User" },
     img: { type: String, required: true },
     desc: { type: String, required: true },
     rating: { type: Number, required: true, default: 1 },
@@ -16,7 +16,7 @@ const CourseSchema = new Schema<Course>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<Course>("Course", CourseSchema);

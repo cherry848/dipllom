@@ -5,6 +5,7 @@ import { Profile } from "./components/Profile/Profile";
 import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
 import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
+import { Progress } from "./components/pages/Progress/Progress";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,14 @@ const router = createBrowserRouter([
         element: <AuthRequiredProvider>Test</AuthRequiredProvider>,
       },
       { path: "profile", element: <Profile></Profile> },
-      { path: "settings", element: <Settings /> },
+      { path: "settings", element: <MainPage /> },
       {
         path: "course/:id",
         children: [{ path: "info", element: <CourseInfoPage /> }],
+      },
+      {
+        path: "progress",
+        element: <Progress />,
       },
     ],
   },

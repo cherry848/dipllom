@@ -11,6 +11,7 @@ export type Course = {
   rating: number;
   tags: string[];
   reviews: string[];
+  progress?: number;
 };
 
 export type GetCourseRes = {

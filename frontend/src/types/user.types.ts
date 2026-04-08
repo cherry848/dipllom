@@ -1,3 +1,4 @@
+import type { Course } from "./course.types";
 import type { ResBase } from "./types";
 
 export type User = {
@@ -6,7 +7,7 @@ export type User = {
   password: string;
   name: string;
   avatar: string | null;
-  activeCourseIds: string[];
+  coursesProgress: [{ course: Course; progress: number }];
   createdAt: string;
   updatedAt: string;
 };

@@ -5,7 +5,9 @@ import Loading from "../Loading";
 import { useAuthorizeQuery } from "../../redux/api";
 
 const Layout = () => {
-  const { isLoading } = useAuthorizeQuery();
+  const { isLoading, data } = useAuthorizeQuery();
+
+  console.log(data);
 
   return (
     <div className={s.container}>
