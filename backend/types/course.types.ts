@@ -9,6 +9,7 @@ export type Course = {
   name: string;
   img: string;
   desc: string;
+  status: boolean;
   reviews: Review[];
   rating: number;
   tags: string[];

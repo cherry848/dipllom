@@ -2,6 +2,7 @@ import { useAuthorizeQuery } from "../../../redux/api";
 import { List } from "../../List/List";
 import { Container } from "../../shared/Container/Container";
 import s from "../Progress/Progress.module.css";
+import { Courses } from "./components/Courses/courses";
 import { ProgressWrapper } from "./components/ProgressWrapper/ProgressWrapper";
 
 export const Progress = () => {
@@ -21,8 +22,9 @@ export const Progress = () => {
   const finishedCourses = courses.filter(({ progress }) => progress === 100);
 
   return (
-    <Container>
+    <Container center={false} className={s.container}>
       <List current="Курсы" />
+      <Courses />
       <div className={s.coursesProgressInfo}>
         <ProgressWrapper title="В процессе" courses={inProgressCourses} />
         <ProgressWrapper title="Завершенные" courses={finishedCourses} />

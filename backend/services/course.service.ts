@@ -48,6 +48,14 @@ class CourseService {
 
     return reviewsWithAuthor;
   }
+
+  async getCoursesByUser(authorId: string) {
+    const courses = await courseModel.find({
+      authorId,
+    });
+
+    return courses;
+  }
 }
 
 export const courseService = new CourseService();

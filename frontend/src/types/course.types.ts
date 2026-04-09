@@ -8,6 +8,7 @@ export type Course = {
   name: string;
   img: string;
   desc: string;
+  status: boolean;
   rating: number;
   tags: string[];
   reviews: string[];
