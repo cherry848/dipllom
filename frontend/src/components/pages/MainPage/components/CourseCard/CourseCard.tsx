@@ -19,16 +19,20 @@ export const CourseCard = ({
 }: CourseCardProps) => {
   return (
     <div className={s.container}>
-      <div className={s.left}>
-        <div className={s.name}>{name}</div>
-        <div className={s.desc}>{desc}</div>
+      <div className={s.top}>
+        <div className={s.info}>
+          <div className={s.name}>{name}</div>
+          <div className={s.desc}>{desc}</div>
+        </div>
 
-        <Rating rating={rating} />
-        <Tags tags={tags} />
+        <div className={s.img}>
+          <img src={img} />
+        </div>
       </div>
 
-      <div className={s.img}>
-        <img src={img} />
+      <div className={s.bottom}>
+        <Rating rating={rating} />
+        <Tags tags={tags} />
       </div>
     </div>
   );
