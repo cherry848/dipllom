@@ -5,11 +5,13 @@ import { api } from "../api";
 
 type UserState = User & {
   isAuth: boolean;
+  isLoading: boolean;
 };
 
 const INITIAL_STATE: UserState = {
   _id: "",
   isAuth: false,
+  isLoading: true,
   createdAt: "",
   updatedAt: "",
   email: "",
@@ -27,11 +29,11 @@ export const userSlice = createSlice({
     build.addMatcher(
       api.endpoints.authorize.matchFulfilled,
       (_, { payload }) => {
-        return { ...payload.user, isAuth: true };
+        return { ...payload.user, isAuth: true, isLoading: false };
       }
     );
     build.addMatcher(api.endpoints.authorize.matchRejected, () => {
-      return INITIAL_STATE;
+      return { ...INITIAL_STATE, isLoading: false };
     });
   },
 });
