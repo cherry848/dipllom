@@ -6,6 +6,7 @@ import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
 import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
 import { Progress } from "./components/pages/Progress/Progress";
+import { Catalog } from "./components/pages/Catalog/Catalog";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
         path: "progress",
         element: <Progress />,
       },
+      { path: "catalog", element: <Catalog /> },
     ],
   },
 ]);

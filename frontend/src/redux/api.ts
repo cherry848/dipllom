@@ -12,12 +12,17 @@ import type {
   AuthRegisterRes,
 } from "../types/auth.types";
 import type { BaseSort } from "../types/types";
-import type { Course, GetCourseRes } from "../types/course.types";
+import type {
+  Course,
+  GetCatalogCoursesReq,
+  GetCourseRes,
+  GetCatalogCoursesRes,
+} from "../types/course.types";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Course"],
   endpoints: (build) => ({
     // Auth
     authorize: build.query<AuthAuthorizeRes, void>({
@@ -37,42 +42,49 @@ export const api = createApi({
     }),
 
     // User
-
     update: build.mutation<
       UserUpdateRes,
       { id: string; data: FormData | { name?: string; password?: string } }
     >({
-      query: ({ id, data }) => {
-        return {
-          url: `/me/${id}`,
-          method: "PATCH",
-          data,
-        };
-      },
-      // invalidatesTags:  ["User"],
+      query: ({ id, data }) => ({
+        url: `/me/${id}`,
+        method: "PATCH",
+        data,
+      }),
       invalidatesTags: (result) =>
         result ? [{ type: "User", id: result.user._id }] : ["User"],
     }),
+
     verifyPassword: build.mutation<VerifyPasswordRes, VerifyPasswordReq>({
-      query: ({ id, password }) => {
-        return {
-          url: `me/${id}/verify-password`,
-          method: "POST",
-          data: { password: password },
-        };
-      },
+      query: ({ id, password }) => ({
+        url: `me/${id}/verify-password`,
+        method: "POST",
+        data: { password },
+      }),
     }),
 
     // Courses
-
     getCourses: build.query<Course[], BaseSort>({
       query: (params) => ({ url: "courses", params }),
     }),
+
     getCourseById: build.query<GetCourseRes, string>({
       query: (id) => ({ url: `/course/${id}` }),
     }),
+
     getCoursesByAuthor: build.query<Course[], string>({
       query: (id) => ({ url: `/me/${id}/courses` }),
+    }),
+
+    getCatalogCourses: build.query<GetCatalogCoursesRes, GetCatalogCoursesReq>({
+      query: (data) => ({ url: "/courses", method: "POST", data }),
+      providesTags: (result) =>
+        result
+          ? result.data.map((course) => ({
+              type: "Course",
+              id: course._id,
+            }))
+          : ["Course"],
     }),
   }),
 });
@@ -86,4 +98,5 @@ export const {
   useGetCoursesQuery,
   useGetCourseByIdQuery,
   useGetCoursesByAuthorQuery,
+  useLazyGetCatalogCoursesQuery,
 } = api;

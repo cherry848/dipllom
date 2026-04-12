@@ -9,3 +9,9 @@ export type BaseSort = Partial<{
   order: number; // 1 | -1
   limit: number;
 }>;
+export type Pagination = {
+  total: number;
+  page: number;
+  pages: number;
+  limit: 9;
+};

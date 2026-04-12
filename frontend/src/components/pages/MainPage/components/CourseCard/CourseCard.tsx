@@ -21,20 +21,21 @@ export const CourseCard = ({
   progress,
 }: CourseCardProps) => {
   return (
-    <>
-      <div className={s.container}>
-        <div className={s.courseInfo}>
-          <div className={s.left}>
-            <div className={s.name}>{name}</div>
-            <div className={s.desc}>{desc}</div>
-
-            <Rating rating={rating} />
-            <Tags tags={tags} />
-          </div>
-          <div className={s.img}>
-            <img src={img} />
-          </div>
+    <div className={s.container}>
+      <div className={s.top}>
+        <div className={s.info}>
+          <div className={s.name}>{name}</div>
+          <div className={s.desc}>{desc}</div>
         </div>
+
+        <div className={s.img}>
+          <img src={img} />
+        </div>
+      </div>
+
+      <div className={s.bottom}>
+        <Rating rating={rating} />
+        <Tags tags={tags} />
         {progress && (
           <div className={s.progress}>
             <div
@@ -45,6 +46,6 @@ export const CourseCard = ({
         )}
         {progress === 100 && <Button className={s.button}>Сертификат</Button>}
       </div>
-    </>
+    </div>
   );
 };

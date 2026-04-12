@@ -1,0 +1,32 @@
+.label {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 100%;
+    color: #334155;
+}
+
+.checkmark {
+    width: 10px;
+    height: 10px;
+    background: none;
+    border: 1.5px solid #334155;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checked {
+    background: #334155;
+}
+
+.img {
+    width: 9px;
+    height: 9px;
+}
+
+.input {
+    display: none;
+}

@@ -17,7 +17,7 @@ const CourseProgressSchema = new Schema(
   { _id: false },
 );
 
-const UserSchema = new Schema<User>(
+const User = new Schema<User>(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -31,4 +31,4 @@ const UserSchema = new Schema<User>(
   { timestamps: true },
 );
 
-export default mongoose.model<User>("User", UserSchema);
+export default mongoose.model<User>("User", User);
