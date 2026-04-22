@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 20px;
+    color: #334155;
+}
+
+.info {
+    display: flex;
+    gap: 35px;
+}
+
+.coursesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+}
+
+.coursesContainerItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 33px;
+    border: 1px solid #9F9F9F;
+    border-radius: 4px;
+}
+
+.coursesCount {
+    font-weight: 700;
+    font-size: 32px;
+    color: #334155;
+}
+
+.status {
+    font-weight: 500;
+    font-size: 20px;
+    color: #64748B;
+    white-space: nowrap;
+}

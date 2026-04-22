@@ -3,7 +3,6 @@ import { Button } from "../shared/Button/Button";
 import s from "./Settings.module.css";
 import { useUpdateMutation, useVerifyPasswordMutation } from "../../redux/api";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import { List } from "../List/List";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Input } from "../shared/Input/Input";
 import { Form } from "../shared/Form/Form";
@@ -111,7 +110,6 @@ export const Settings = () => {
 
   return (
     <div className={s.container}>
-      <List current="Настройки" />
       <span className={s.settings}>Настройки</span>
       <div className={s.wrapper}>
         <div onClick={() => ref.current?.click()} className={s.imgWrapper}>
@@ -146,6 +144,7 @@ export const Settings = () => {
           label="Поменять имя"
         >
           <Input
+            classNames={{ input: s.input, container: s.inputContainer }}
             id="Поменять имя"
             value={userData.name}
             placeholder={name}
@@ -175,6 +174,7 @@ export const Settings = () => {
           label="Поменять пароль"
         >
           <Input
+            classNames={{ input: s.input, container: s.inputContainer }}
             value={userData.currentPassword}
             id="Поменять пароль"
             placeholder="Текущий пароль"
@@ -189,6 +189,7 @@ export const Settings = () => {
             type="password"
           />
           <Input
+            classNames={{ input: s.input, container: s.inputContainer }}
             id="Новый пароль"
             onChange={(password) => {
               setErrors(ERROR_STATE);

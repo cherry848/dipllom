@@ -1,58 +1,50 @@
 import cn from "classnames";
 import s from "./List.module.css";
-import { useState } from "react";
-import { useNavigate } from "react-router";
 
-interface ListProps {
-  current: string;
-}
+type ListProps = {
+  currentTab: string | null;
+  onTabChange: (tab: string) => void;
+};
 
-export const List = ({ current }: ListProps) => {
-  const [clicked, setClicked] = useState(current);
-  const navigate = useNavigate();
-
+export const List = ({ currentTab = "profile", onTabChange }: ListProps) => {
   return (
     <ul className={s.ul}>
       <li
         className={cn({
-          [s.li]: clicked === "Профиль",
+          [s.li]: currentTab === "profile",
         })}
         onClick={() => {
-          setClicked("Профиль");
-          navigate("/profile");
+          onTabChange("profile");
         }}
       >
         Профиль
       </li>
       <li
         onClick={() => {
-          setClicked("Статистика");
-          navigate("/stats");
+          onTabChange("stats");
         }}
         className={cn({
-          [s.li]: clicked === "Статистика",
+          [s.li]: currentTab === "stats",
         })}
       >
         Статистика
       </li>
       <li
         onClick={() => {
-          setClicked("Курсы");
-          navigate("/courses");
+          onTabChange("courses");
         }}
         className={cn({
-          [s.li]: clicked === "Курсы",
+          [s.li]: currentTab === "courses",
         })}
       >
         Курсы
       </li>
       <li
         onClick={() => {
-          setClicked("Настройки");
-          navigate("/settings");
+          onTabChange("settings");
         }}
         className={cn({
-          [s.li]: clicked === "Настройки",
+          [s.li]: currentTab === "settings",
         })}
       >
         Настройки

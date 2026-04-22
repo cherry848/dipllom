@@ -25,7 +25,7 @@ router.post(
 );
 
 router.get(
-  "/me/:id/courses",
+  "/me/:authorId/courses",
   authCheckMiddleware,
   coursesController.getCoursesByUser,
 );

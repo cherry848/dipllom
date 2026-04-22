@@ -1,16 +1,16 @@
-import { useAuthorizeQuery } from "../../../redux/api";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 import { List } from "../../List/List";
 import { Container } from "../../shared/Container/Container";
 import s from "../Progress/Progress.module.css";
-import { Courses } from "./components/Courses/courses";
+import { Courses } from "./components/Courses/Courses";
 import { ProgressWrapper } from "./components/ProgressWrapper/ProgressWrapper";
 
 export const Progress = () => {
-  const { data } = useAuthorizeQuery();
+  const data = useAppSelector((state) => state.user);
 
-  if (!data) return <>Loading...</>;
+  console.log(data);
 
-  const courses = data.user.coursesProgress.map((el) => {
+  const courses = data.coursesProgress.map((el) => {
     return {
       ...el.course,
       progress: el.progress,
@@ -22,8 +22,7 @@ export const Progress = () => {
   const finishedCourses = courses.filter(({ progress }) => progress === 100);
 
   return (
-    <Container center={false} className={s.container}>
-      <List current="Курсы" />
+    <Container className={s.container}>
       <Courses />
       <div className={s.coursesProgressInfo}>
         <ProgressWrapper title="В процессе" courses={inProgressCourses} />

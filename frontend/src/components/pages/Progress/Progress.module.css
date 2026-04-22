@@ -1,8 +1,8 @@
 .container {
-    margin-top: 0;
-    margin-right: auto;
-    margin-bottom: 70px;
-    margin-left: auto;
+    padding: 0 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .coursesProgressInfo {
@@ -10,4 +10,11 @@
     display: flex;
     flex-direction: column;
     gap: 40px; 
+}
+
+.wrapper {
+    padding: 0 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }

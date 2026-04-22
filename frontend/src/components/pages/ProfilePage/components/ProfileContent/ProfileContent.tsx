@@ -3,11 +3,14 @@ import { useAppSelector } from "../../../../../hooks/reduxHooks";
 import { Button } from "../../../../shared/Button/Button";
 import s from "./ProfileContent.module.css";
 
-export const ProfileContent = () => {
+type ProfileContentProps = {
+  navigate: (tab: string) => void;
+};
+
+export const ProfileContent = ({ navigate }: ProfileContentProps) => {
   const { avatar, email, name, createdAt } = useAppSelector(
     (state) => state.user,
   );
-  const navigate = useNavigate();
 
   return (
     <div className={s.profileWrapper}>
@@ -33,7 +36,7 @@ export const ProfileContent = () => {
         </div>
         <Button
           onClick={() => {
-            navigate("/settings");
+            navigate("settings");
           }}
           className={s.button}
         >
