@@ -10,7 +10,6 @@ import { Stats } from "./components/Stats/Stats";
 export const ProfilePage = () => {
   const [params, setParams] = useSearchParams({ tab: "profile" });
 
-  Object.fromEntries(params.entries());
   const currentTab = params.get("tab");
 
   return (
