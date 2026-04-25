@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../../../../hooks/reduxHooks";
 import { Courses } from "../../../Progress/components/Courses/Courses";
-import { ProgressWrapper } from "../../../Progress/components/ProgressWrapper/ProgressWrapper";
+import { ProgressWrapper } from "./ProgressWrapper/ProgressWrapper";
 import s from "./CoursesContent.module.css";
 
 export const CoursesContent = () => {

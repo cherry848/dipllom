@@ -53,8 +53,6 @@ class CoursesController {
     next: NextFunction,
   ) {
     try {
-      console.log(1);
-      console.log(req.params.authorId);
       const courses = await courseService.getCoursesByUser(req.params.authorId);
 
       return res.json(courses);

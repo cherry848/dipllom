@@ -5,12 +5,18 @@ type MyCourseCardProps = {
   title: string;
   author: string;
   status: boolean;
+  img: string;
 };
 
-export const MyCourseCard = ({ author, status, title }: MyCourseCardProps) => {
+export const MyCourseCard = ({
+  author,
+  status,
+  title,
+  img,
+}: MyCourseCardProps) => {
   return (
     <div className={s.container}>
-      <img className={s.img} src="" alt="" />
+      <img className={s.img} src={img ?? "/avatar--rofl.avif"} alt="" />
       <div className={s.info}>
         <h1 className={s.title}>{title}</h1>
         <div className={s.authorBar}>

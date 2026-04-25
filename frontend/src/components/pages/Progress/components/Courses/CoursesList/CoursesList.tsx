@@ -1,16 +1,12 @@
-import { useAppSelector } from "../../../../../hooks/reduxHooks";
-import { useGetCoursesByAuthorQuery } from "../../../../../redux/api";
-import s from "../CoursesList/CoursesList.module.css";
+import { useAppSelector } from "../../../../../../hooks/reduxHooks";
+import { useGetCoursesByAuthorQuery } from "../../../../../../redux/api";
 import { MyCourseCard } from "./MyCourseCard/MyCourseCard";
+import s from "./CoursesList.module.css";
 
 export const CoursesList = () => {
   const { _id, name } = useAppSelector((state) => state.user);
 
-  console.log(_id);
-
   const { data } = useGetCoursesByAuthorQuery(_id);
-
-  console.log(data);
 
   return (
     <div className={s.container}>
@@ -21,6 +17,7 @@ export const CoursesList = () => {
             title={course.name}
             author={name}
             status={course.status}
+            img={course.img}
           />
         );
       })}

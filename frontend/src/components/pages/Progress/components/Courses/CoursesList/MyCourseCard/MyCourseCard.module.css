@@ -2,8 +2,10 @@
     display: flex;
     gap: 20px;
     padding: 10px 13px;
+    /* flex-shrink: 0; */
     border: 1px solid;
-    min-width: 825px;
+    max-width: 825px;
+    width: 100%;
 }
 
 .title {
@@ -23,6 +25,7 @@
     font-size: 20px;
     line-height: 100%;
     color: #64748B;
+    overflow-wrap: break-word;
 }
 
 .edit {
@@ -38,7 +41,10 @@
 .img {
     width: 100px;
     height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
 }
+
 
 .info {
     flex-grow: 1;

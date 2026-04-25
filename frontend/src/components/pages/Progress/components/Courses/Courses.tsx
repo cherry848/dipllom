@@ -1,5 +1,5 @@
 import s from "../Courses/Courses.module.css";
-import { CoursesList } from "../CoursesList/CoursesList";
+import { CoursesList } from "./CoursesList/CoursesList";
 
 export const Courses = () => {
   return (
