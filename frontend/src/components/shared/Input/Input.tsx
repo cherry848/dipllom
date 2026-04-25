@@ -1,4 +1,4 @@
-import c from "classnames";
+import cn from "classnames";
 import s from "./Input.module.css";
 import type { ReactNode } from "react";
 
@@ -35,7 +35,7 @@ export const Input = ({
   icon,
 }: InputProps) => {
   return (
-    <label className={c(classNames?.container)}>
+    <label className={cn(s.container, classNames?.container)}>
       {!!icon && <div className={s.icon}>{icon}</div>}
 
       <input
@@ -44,7 +44,7 @@ export const Input = ({
         onBlur={onBlur}
         value={value}
         placeholder={placeholder}
-        className={c(classNames?.input, {
+        className={cn(s.input, classNames?.input, {
           [s.wrong]: error,
         })}
         type={type}
