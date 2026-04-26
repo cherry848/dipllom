@@ -144,7 +144,7 @@ export const Settings = () => {
           label="Поменять имя"
         >
           <Input
-            classNames={{ input: s.input, container: s.inputContainer }}
+            classNames={{ input: s.input }}
             id="Поменять имя"
             value={userData.name}
             placeholder={name}
@@ -152,7 +152,7 @@ export const Settings = () => {
               setErrors(ERROR_STATE);
               setUserData({ ...userData, name });
             }}
-            error={!focusName && !!errors.nameForm.error}
+            error
           />
           <Button onMouseDown={(e) => e.preventDefault()} className={s.button}>
             Изменить имя

@@ -1,68 +1,66 @@
 .course {
-    min-height: 200px;
-    max-width: 300px;
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-    padding: 10px 10px 10px 15px;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    flex: 1 0 0;
+  min-height: 200px;
+  max-width: 300px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 10px 10px 10px 15px;
+  border: 1px solid #334155;
+  border-radius: 8px;
 }
 
 .courseInfo {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  flex: 1;
 }
 
 .img {
-    margin-top: 20px;
-    width: 100px;
-    height: 100px;
+  margin-top: 20px;
+  width: 100px;
+  height: 100px;
 }
 
 .title {
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 100%;
-    color: #334155;
-    margin-bottom: 19px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 100%;
+  color: #334155;
+  margin-bottom: 19px;
 }
 
 .desc {
-    font-weight: 500;
-    font-size: 10px;
-    line-height: 100%;
-    color: #64748B;
-    margin-bottom: 25px;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 100%;
+  color: #64748b;
+  margin-bottom: 25px;
 }
 
 .rating {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    margin-bottom: 5px;
-    margin-top: auto;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: auto;
 }
 
 .avg {
-    font-weight: 600;
-    font-size: 10px;
-    line-height: 100%;
-    color: #334155;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 100%;
+  color: #334155;
 }
 
 .stars {
-
 }
 
 .categories {
-    display: flex;
-    font-weight: 400;
-    font-size: 8px;
-    line-height: 100%;
-    color: #64748B;
-    gap: 2px;
+  display: flex;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 100%;
+  color: #64748b;
+  gap: 2px;
 }

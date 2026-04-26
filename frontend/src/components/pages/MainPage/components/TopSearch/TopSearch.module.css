@@ -10,7 +10,7 @@
   border-radius: 8px;
 }
 
-.input_container {
+.input_wrapper {
   flex-grow: 1;
   max-width: 365px;
   background: #f8fafc;

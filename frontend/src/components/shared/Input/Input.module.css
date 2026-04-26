@@ -1,51 +1,56 @@
 .container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
   width: 100%;
 }
 
-.icon {
-  width: 16px;
-  height: 16px;
+.container.error .input_wrapper {
+  border: 1px solid red;
+}
+
+.container.error .label,
+.container.error .input,
+.container.error .input::placeholder {
+  color: red;
 }
 
 .label {
   font-weight: 700;
   font-size: 18px;
   color: #334155;
-  line-height: 22px;
+}
+
+.input_wrapper {
   display: flex;
-  justify-content: space-between;
-}
-
-.error {
-  align-self: self-end;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 100%;
-  color: red;
-}
-
-.input {
+  align-items: center;
+  gap: 10px;
   flex-grow: 1;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
+  padding: 12px 10px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.icon > * {
+  width: 100%;
+  height: 100%;
+}
+
+.input {
   font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
   color: #64748b;
-  padding: 12px 10px;
   outline: none;
+  border: none;
+  flex-grow: 1;
 }
 
 .input::placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #64748b;
-}
-
-.wrong {
-  border: 1px solid red;
+  color: inherit;
 }
