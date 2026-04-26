@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { BaseSort, ReqSearchQueryType } from "../types/types";
 import { courseService } from "../services/course.service";
 import { userService } from "../services/user.service";
@@ -21,7 +21,7 @@ type GetCourseResBody = {
 class CoursesController {
   async getCourses(
     req: Request<{}, {}, {}, ReqSearchQueryType<BaseSort>>,
-    res: Response
+    res: Response,
   ) {
     const query: BaseSort = {
       sortBy: req.query.sortBy,
@@ -36,7 +36,7 @@ class CoursesController {
 
   async getCourse(
     req: Request<GetCourseReqParams>,
-    res: Response<GetCourseResBody>
+    res: Response<GetCourseResBody>,
   ) {
     const courseId = req.params.id;
 
@@ -45,6 +45,20 @@ class CoursesController {
     const reviews = await courseService.getCourseReviews(courseId);
 
     return res.json({ course, author, reviews });
+  }
+
+  async getCoursesByUser(
+    req: Request<{ authorId: string }>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const courses = await courseService.getCoursesByUser(req.params.authorId);
+
+      return res.json(courses);
+    } catch (e) {
+      next(e);
+    }
   }
 }
 

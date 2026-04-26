@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { Review } from "./review.types";
 
 export type Course = {
   _id: string;
@@ -9,6 +8,7 @@ export type Course = {
   name: string;
   img: string;
   desc: string;
+  status: boolean;
   reviews: string[];
   rating: number;
   users: string[];

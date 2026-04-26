@@ -1,0 +1,20 @@
+.title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
+    color: #334155;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    /* width: 1180px; */
+    /* align-self: center; */
+}
+
+.courses {
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+}

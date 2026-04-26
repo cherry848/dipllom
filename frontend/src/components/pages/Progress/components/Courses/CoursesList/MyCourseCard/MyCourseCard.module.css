@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 10px 13px;
+  /* flex-shrink: 0; */
+  border: 1px solid;
+  max-width: 825px;
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  color: #334155;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.authorBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.author {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  color: #64748b;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.edit {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.info {
+  flex-grow: 1;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.editImg {
+  width: 24px;
+  height: 24px;
+}
+
+.status {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  align-self: flex-end;
+}
+
+.published {
+  color: #54ad54;
+}
+
+.unpublished {
+  color: #fb3939bd;
+}

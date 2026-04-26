@@ -72,6 +72,10 @@ export const api = createApi({
       query: (id) => ({ url: `/course/${id}` }),
     }),
 
+    getCoursesByAuthor: build.query<Course[], string>({
+      query: (id) => ({ url: `/me/${id}/courses` }),
+    }),
+
     getCatalogCourses: build.query<GetCatalogCoursesRes, GetCatalogCoursesReq>({
       query: (data) => ({ url: "/courses", method: "POST", data }),
       providesTags: (result) =>
@@ -93,5 +97,6 @@ export const {
   useVerifyPasswordMutation,
   useGetCoursesQuery,
   useGetCourseByIdQuery,
+  useGetCoursesByAuthorQuery,
   useLazyGetCatalogCoursesQuery,
 } = api;

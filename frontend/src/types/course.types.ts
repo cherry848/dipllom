@@ -9,6 +9,7 @@ export type Course = {
   name: string;
   img: string;
   desc: string;
+  status: boolean;
   rating: number;
   language: string;
   category: string;
@@ -16,6 +17,7 @@ export type Course = {
   users: string[];
   tags: string[];
   reviews: string[];
+  progress?: number;
 };
 
 export type GetCourseRes = {

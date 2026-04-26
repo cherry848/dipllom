@@ -1,11 +1,10 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "./components/Layout";
-import AuthRequiredProvider from "./utils/AuthRequiredProvider";
-import { Profile } from "./components/Profile/Profile";
-import { Settings } from "./components/Settings/Settings";
 import { MainPage } from "./components/pages/MainPage/MainPage";
 import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage";
 import { Catalog } from "./components/pages/Catalog/Catalog";
+import { ProfilePage } from "./components/pages/ProfilePage/ProfilePage";
+import AuthRequired from "./utils/AuthRequired";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +13,14 @@ const router = createBrowserRouter([
     children: [
       { element: <MainPage />, index: true },
       {
-        path: "test",
-        element: <AuthRequiredProvider>Test</AuthRequiredProvider>,
+        path: "profile",
+        element: (
+          <AuthRequired>
+            <ProfilePage />
+          </AuthRequired>
+        ),
       },
-      { path: "profile", element: <Profile></Profile> },
-      { path: "settings", element: <Settings /> },
+      { path: "settings", element: <MainPage /> },
       {
         path: "course/:id",
         children: [{ path: "info", element: <CourseInfoPage /> }],

@@ -9,6 +9,7 @@ const CourseSchema = new Schema<Course>(
     desc: { type: String, required: true },
     rating: { type: Number, required: true, default: 1 },
     tags: { type: [String], required: true },
+    status: { type: Boolean, default: false },
     category: { type: String, required: true },
     duration: { type: Number, required: true, default: 0 },
     language: { type: String, required: true },

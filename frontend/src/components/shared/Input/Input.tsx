@@ -1,11 +1,12 @@
-import c from "classnames";
+import cn from "classnames";
 import s from "./Input.module.css";
 import type { ReactNode } from "react";
 
-type ClassNames = {
-  container?: string;
+type ClassNames = Partial<{
+  container: string;
+  inputWrapper: string;
   input: string;
-};
+}>;
 
 interface InputProps {
   value?: string;
@@ -19,6 +20,7 @@ interface InputProps {
   onBlur?: () => void;
   classNames?: ClassNames;
   icon?: ReactNode;
+  label?: string;
 }
 
 export const Input = ({
@@ -33,24 +35,27 @@ export const Input = ({
   onBlur,
   classNames,
   icon,
+  label,
 }: InputProps) => {
   return (
-    <label className={c(classNames?.container)}>
-      {!!icon && <div className={s.icon}>{icon}</div>}
+    <label className={cn(s.container, error && s.error, classNames?.container)}>
+      {!!label && <div className={s.label}>{label}</div>}
 
-      <input
-        onClick={onClick}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        value={value}
-        placeholder={placeholder}
-        className={c(classNames?.input, {
-          [s.wrong]: error,
-        })}
-        type={type}
-        id={id}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
+      <div className={cn(s.input_wrapper, classNames?.inputWrapper)}>
+        {!!icon && <div className={s.icon}>{icon}</div>}
+
+        <input
+          onClick={onClick}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          value={value}
+          placeholder={placeholder}
+          className={cn(s.input, classNames?.input)}
+          type={type}
+          id={id}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
+      </div>
     </label>
   );
 };

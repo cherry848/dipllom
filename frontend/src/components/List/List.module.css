@@ -1,5 +1,4 @@
 .ul {
-    margin-top: 15px;
     display: flex;
     list-style-type: none;
     gap: 50px;
@@ -21,4 +20,5 @@
     font-size: 18px;
     padding-bottom: 12px;
     line-height: 100%;
+    margin-bottom: -1px;
 }

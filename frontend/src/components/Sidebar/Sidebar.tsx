@@ -41,7 +41,11 @@ export const Sidebar = ({
         <Form>
           <Input
             id="Search"
-            classNames={{ container: s.search, input: s.input }}
+            classNames={{
+              container: s.search,
+              inputWrapper: s.input_wrapper,
+              input: s.input,
+            }}
             placeholder="Название курса"
             value={searchValue}
             onChange={handleSearchChanges}

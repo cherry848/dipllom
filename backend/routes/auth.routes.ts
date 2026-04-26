@@ -3,6 +3,7 @@ import { authController } from "../controllers/auth.controller";
 import { authCheckMiddleware } from "../middlewares/authCheck.middleware";
 import { upload } from "../middlewares/upload.middleware";
 import { userController } from "../controllers/user.controller";
+import { coursesController } from "../controllers/courses.controller";
 import { courseController } from "../controllers/course.controller";
 import { reviewController } from "../controllers/review.controller";
 const router = Router();
@@ -23,6 +24,11 @@ router.post(
   userController.verifyPassword,
 );
 
+router.get(
+  "/me/:authorId/courses",
+  authCheckMiddleware,
+  coursesController.getCoursesByUser,
+);
 // router.post("/me/:id/course", authCheckMiddleware, courseController.create);
 
 // router.post(

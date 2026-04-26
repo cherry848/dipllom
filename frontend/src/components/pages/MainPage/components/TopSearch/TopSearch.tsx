@@ -19,8 +19,8 @@ export const TopSearch = () => {
     >
       <Input
         icon={<img src="/search.svg" />}
-        placeholder="Название курса, автор или язык программирования"
-        classNames={{ container: s.input_container, input: s.input }}
+        placeholder="Название курса"
+        classNames={{ inputWrapper: s.input_wrapper, input: s.input }}
         value={searchValue}
         onChange={setSearchValue}
       />
