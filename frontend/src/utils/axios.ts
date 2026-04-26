@@ -1,5 +1,6 @@
 import type { BaseQueryFn } from "@reduxjs/toolkit/query/react";
 import axiosOriginal, { AxiosError, type AxiosRequestConfig } from "axios";
+import { BACK_URL } from "./constants";
 
 type RefreshResponse = {
   accessToken: string;
@@ -13,7 +14,7 @@ declare module "axios" {
 }
 
 export const axios = axiosOriginal.create({
-  baseURL: import.meta.env.VITE_BACK_URL,
+  baseURL: BACK_URL + "/api",
   withCredentials: true,
 });
 
@@ -51,12 +52,12 @@ axios.interceptors.response.use(
         const {
           data: { accessToken },
         } = await axiosOriginal.post<RefreshResponse>(
-          "/auth/refresh",
+          "api/auth/refresh",
           {},
           {
             baseURL: import.meta.env.VITE_BACK_URL,
             withCredentials: true,
-          },
+          }
         );
 
         localStorage.setItem("accessToken", accessToken);
@@ -70,7 +71,7 @@ axios.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 
 export const axiosBaseQuery =
