@@ -9,7 +9,7 @@ type CourseCardProps = {
   img: string;
   desc: string;
   rating: number;
-  tags: string[];
+  tags?: string[];
   progress?: number;
 };
 

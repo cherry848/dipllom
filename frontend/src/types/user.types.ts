@@ -1,4 +1,4 @@
-import type { Course } from "./course.types";
+import type { CourseProgress } from "./course.types";
 import type { ResBase } from "./types";
 
 export type User = {
@@ -7,7 +7,7 @@ export type User = {
   password: string;
   name: string;
   avatar: string | null;
-  coursesProgress: [{ course: Course; progress: number }];
+  coursesProgress: CourseProgress[];
   createdAt: string;
   updatedAt: string;
 };

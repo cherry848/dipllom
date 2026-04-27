@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import s from "./Modal.module.css";
 
 interface ModalProps {
-  show: boolean;
-  onClose: () => void;
+  show?: boolean;
+  onClose?: () => void;
   children: ReactNode;
 }
 

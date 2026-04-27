@@ -1,9 +1,9 @@
 import s from "../ProgressWrapper/ProgressWrapper.module.css";
-import type { Course } from "../../../../../../types/course.types";
+import type { CourseProgress } from "../../../../../../types/course.types";
 import { CourseCard } from "../../../../MainPage/components/CourseCard/CourseCard";
 
 type ProgressWrapperProps = {
-  courses: Course[];
+  courses: CourseProgress[];
   title: string;
 };
 

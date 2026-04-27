@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./slices/user.slice";
+import { modalSlice, userSlice } from "./slices/user.slice";
 import { api } from "./api";
 
 export const store = configureStore({
   reducer: {
     // slices
     user: userSlice.reducer,
+
+    modal: modalSlice.reducer,
 
     //api
     [api.reducerPath]: api.reducer,

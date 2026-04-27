@@ -72,14 +72,14 @@ export const Header = ({ isLoading }: HeaderProps) => {
         {modal.type === "login" ? (
           <AuthModal
             auth="Войти"
-            onClose={() => {
+            onToggle={() => {
               setModal({ show: false, type: "login" });
             }}
           />
         ) : (
           <AuthModal
             auth="Зарегистрироваться"
-            onClose={() => {
+            onToggle={() => {
               setModal({ show: false, type: "login" });
             }}
           />

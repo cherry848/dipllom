@@ -5,23 +5,30 @@ import s from "./AuthModal.module.css";
 import { useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../../redux/api";
 import { Form } from "../shared/Form/Form";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { setData, toggle } from "../../redux/slices/user.slice";
 
 interface AuthModalProps {
   auth: "Войти" | "Зарегистрироваться";
-  onClose: () => void;
+  onToggle: () => void;
+  onChange: () => void;
 }
 
-export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
+export const AuthModal = ({ auth, onToggle, onChange }: AuthModalProps) => {
   const [login] = useLoginMutation();
   const [register] = useRegisterMutation();
 
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setDfata] = useState({ email: "", password: "" });
+
+  const modalData = useAppSelector((state) => state.modal);
+
+  const dispatch = useAppDispatch();
 
   const handleAuth = () => {
     if (auth === "Войти") {
-      login(data);
+      login({ email: modalData.email, password: modalData.password });
     } else {
-      register(data);
+      register({ email: modalData.email, password: modalData.password });
     }
   };
 
@@ -30,7 +37,7 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
       <div className={s.header}>
         {auth === "Войти" ? auth : "Зарегистрироваться"}
         <img
-          onClick={onClose}
+          onClick={() => toggle()}
           src="/close-button.svg"
           alt="close button"
           className={s.img}
@@ -41,14 +48,16 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
           <Input
             placeholder="Введите ваш email"
             value={data.email}
-            onChange={(email) => setData({ ...data, email })}
+            onChange={(email) => {
+              dispatch(setData({ ...modalData, email }));
+            }}
           />
         </Form>
         <Form label="Пароль">
           <Input
             placeholder="Введите ваш пароль"
             value={data.password}
-            onChange={(password) => setData({ ...data, password })}
+            onChange={(password) => dispatch({ ...modalData, password })}
           />
         </Form>
       </div>
@@ -56,7 +65,7 @@ export const AuthModal = ({ auth, onClose }: AuthModalProps) => {
         className={s.button}
         onClick={() => {
           handleAuth();
-          onClose();
+          onToggle();
         }}
       >
         {auth}
