@@ -1,9 +1,7 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { Navigate } from "react-router";
-import { Modal } from "../components/shared/Modal/Modal";
-import { AuthModal } from "../components/AuthModal/AuthModal";
-import { toggle } from "../redux/slices/user.slice";
+import { toggle } from "../redux/slices/modal.slice";
 
 type Props = {
   children: ReactNode;
@@ -13,25 +11,18 @@ type Props = {
 const AuthRequired = ({ children, loadingNode }: Props) => {
   const { isAuth, isLoading } = useAppSelector((state) => state.user);
 
-  const { email, password, show, type } = useAppSelector(
-    (state) => state.modal,
-  );
+  const { show } = useAppSelector((state) => state.modal);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isAuth && !show && !isLoading) dispatch(toggle());
+  }, [dispatch, isAuth, show, isLoading]);
 
   if (isLoading) return loadingNode ?? "Загрузка";
 
   if (!isAuth) {
-    return (
-      <Modal>
-        <AuthModal
-          auth={type === "login" ? "Войти" : "Зарегистрироваться"}
-          onToggle={() => {
-            dispatch(toggle());
-          }}
-        />
-      </Modal>
-    );
+    return <Navigate to={"/"} />;
   }
 
   return children;

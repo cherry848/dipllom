@@ -12,6 +12,7 @@ export const Modal = ({ show, onClose, children }: ModalProps) => {
   if (!show) {
     return null;
   }
+
   return createPortal(
     <div onClick={onClose} className={s.overlay}>
       <div

@@ -2,42 +2,35 @@ import c from "classnames";
 import { Button } from "../shared/Button/Button";
 import { Input } from "../shared/Input/Input";
 import s from "./AuthModal.module.css";
-import { useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../../redux/api";
 import { Form } from "../shared/Form/Form";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { setData, toggle } from "../../redux/slices/user.slice";
+import { changeType, setData, toggle } from "../../redux/slices/modal.slice";
 
-interface AuthModalProps {
-  auth: "Войти" | "Зарегистрироваться";
-  onToggle: () => void;
-  onChange: () => void;
-}
-
-export const AuthModal = ({ auth, onToggle, onChange }: AuthModalProps) => {
+export const AuthModal = () => {
   const [login] = useLoginMutation();
   const [register] = useRegisterMutation();
 
-  const [data, setDfata] = useState({ email: "", password: "" });
-
-  const modalData = useAppSelector((state) => state.modal);
+  const modal = useAppSelector((state) => state.modal);
 
   const dispatch = useAppDispatch();
 
   const handleAuth = () => {
-    if (auth === "Войти") {
-      login({ email: modalData.email, password: modalData.password });
+    if (modal.type === "Войти") {
+      login({ email: modal.email, password: modal.password });
     } else {
-      register({ email: modalData.email, password: modalData.password });
+      register({ email: modal.email, password: modal.password });
     }
   };
 
   return (
     <div className={s.modal}>
       <div className={s.header}>
-        {auth === "Войти" ? auth : "Зарегистрироваться"}
+        {modal.type === "Войти" ? "Войти" : "Зарегистрироваться"}
         <img
-          onClick={() => toggle()}
+          onClick={() => {
+            dispatch(toggle());
+          }}
           src="/close-button.svg"
           alt="close button"
           className={s.img}
@@ -47,17 +40,17 @@ export const AuthModal = ({ auth, onToggle, onChange }: AuthModalProps) => {
         <Form label="Email">
           <Input
             placeholder="Введите ваш email"
-            value={data.email}
+            value={modal.email}
             onChange={(email) => {
-              dispatch(setData({ ...modalData, email }));
+              dispatch(setData({ ...modal, email }));
             }}
           />
         </Form>
         <Form label="Пароль">
           <Input
             placeholder="Введите ваш пароль"
-            value={data.password}
-            onChange={(password) => dispatch({ ...modalData, password })}
+            value={modal.password}
+            onChange={(password) => dispatch(setData({ ...modal, password }))}
           />
         </Form>
       </div>
@@ -65,24 +58,27 @@ export const AuthModal = ({ auth, onToggle, onChange }: AuthModalProps) => {
         className={s.button}
         onClick={() => {
           handleAuth();
-          onToggle();
+          dispatch(toggle());
         }}
       >
-        {auth}
+        {modal.type}
       </Button>
       <span
         className={c(s.forgotPassword, {
-          [s.hidden]: auth === "Зарегистрироваться",
+          [s.hidden]: modal.type === "Зарегистрироваться",
         })}
       >
         Забыли пароль?
       </span>
       <span
         className={c(s.authRedirectLink, {
-          [s.loginLink]: auth === "Зарегистрироваться",
+          [s.loginLink]: modal.type === "Зарегистрироваться",
         })}
+        onClick={() => {
+          dispatch(changeType());
+        }}
       >
-        {auth === "Войти" ? "Создать аккаунт" : "Войти"}
+        {modal.type === "Войти" ? "Создать аккаунт" : "Войти"}
       </span>
     </div>
   );
