@@ -1,0 +1,29 @@
+.container {
+  padding: 25px 130px 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header .type {
+  font-weight: 700;
+  font-size: 20px;
+  color: #334155;
+}
+
+.content {
+  border: 1px solid red;
+  max-width: 712px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.content .btn {
+  margin-left: auto;
+  width: 216px;
+}

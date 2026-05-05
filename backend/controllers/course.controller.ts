@@ -1,43 +1,45 @@
 import { NextFunction, Request, Response } from "express";
 import { courseService } from "../services/course.service";
 import {
-  Course,
-  CreateCourseData,
+  CreateCourseControllerBodyData,
+  CreateOrUpdateModuleControllerBodyData,
+  CreateOrUpdateModuleStepControllerData,
+  CreateOrUpdateModuleStepControllerParamsData,
+  DeleteModuleControllerParamsData,
+  DeleteModuleStepControllerParamsData,
   GetCoursesBody,
+  UpdateCourseControllerBodyData,
+  UpdateCourseControllerParamsData,
 } from "../types/course.types";
 import { AppError, ErrorCodes } from "../appError";
+import { ReqBodyType } from "../types/types";
 
 class CourseController {
   async create(
-    req: Request<{ id: string }, {}, CreateCourseData>,
+    req: Request<{}, {}, ReqBodyType<CreateCourseControllerBodyData>>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
-      const { name, desc, category, duration, language } = req.body ?? {};
+      const { name, desc, category, tags } = req.body ?? {};
 
-      const requiredFields = { name, desc, category, duration, language };
-      const missingFields = Object.entries(requiredFields)
-        .filter(
-          ([_, value]) =>
-            value === undefined ||
-            value === null ||
-            (typeof value === "string" && value.trim() === ""),
-        )
-        .map(([key]) => key);
+      const userId = req.userId;
 
-      if (missingFields.length)
+      if (!userId)
+        throw new AppError("Нет userId в request", ErrorCodes.INVALID_DATA);
+
+      if (!name || !desc || !category || !tags?.length)
         throw new AppError(
           "Некорректные входные данные",
-          ErrorCodes.INVALID_DATA,
+          ErrorCodes.INVALID_DATA
         );
 
-      const course = await courseService.create(req.params.id, {
+      const course = await courseService.create({
+        authorId: userId,
         name,
         desc,
         category,
-        duration,
-        language,
+        tags,
       });
       res.status(201).json({ message: "Курс был успешно создан", course });
     } catch (error) {
@@ -45,10 +47,29 @@ class CourseController {
     }
   }
 
+  async updateCourse(
+    req: Request<
+      UpdateCourseControllerParamsData,
+      {},
+      ReqBodyType<UpdateCourseControllerBodyData>
+    >,
+    res: Response
+  ) {
+    const courseId = req.params.id;
+    const courseData = req.body;
+
+    const updatedCourse = await courseService.updateCourse({
+      courseId,
+      ...courseData,
+    });
+
+    res.json({ message: "Курс успешно обновлен", course: updatedCourse });
+  }
+
   async getAll(
     req: Request<{}, {}, GetCoursesBody>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
       const result = await courseService.getCoursesCatalog(req.body);
@@ -61,11 +82,11 @@ class CourseController {
   async uploadImage(
     req: Request<{ id: string }>,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     try {
       if (!req.file)
-        throw new AppError("Файл отсутствует", ErrorCodes.INVALID_CREDENTIALS);
+        throw new AppError("Файл отсутствует", ErrorCodes.INVALID_DATA);
 
       const course = await courseService.uploadImage(req.params.id, req.file);
 
@@ -73,6 +94,81 @@ class CourseController {
     } catch (error) {
       next(error);
     }
+  }
+
+  async createOrUpdateModule(
+    req: Request<
+      { id: string },
+      {},
+      ReqBodyType<CreateOrUpdateModuleControllerBodyData>
+    >,
+    res: Response
+  ) {
+    const courseId = req.params.id;
+    const { moduleName, moduleId } = req.body ?? {};
+
+    if (!moduleName)
+      throw new AppError("Нет имени модуля", ErrorCodes.INVALID_DATA);
+
+    const updatedCourse = await courseService.createOrUpdateModule({
+      courseId,
+      moduleId,
+      moduleName,
+    });
+
+    res.json({ message: "Модуль обновлен", course: updatedCourse });
+  }
+
+  async deleteModule(
+    req: Request<DeleteModuleControllerParamsData>,
+    res: Response
+  ) {
+    const { courseId, moduleId } = req.params;
+
+    const updatedCourse = await courseService.deleteModule(courseId, moduleId);
+
+    res.json({ message: "Модуль удален", course: updatedCourse });
+  }
+
+  async createOrUpdateModuleStep(
+    req: Request<
+      CreateOrUpdateModuleStepControllerParamsData,
+      {},
+      ReqBodyType<CreateOrUpdateModuleStepControllerData>
+    >,
+    res: Response
+  ) {
+    const { courseId, moduleId } = req.params;
+    const { stepName, stepType, stepId } = req.body ?? {};
+
+    if (!moduleId || !stepName || !stepType) {
+      throw new AppError("Не хватает данных", ErrorCodes.INVALID_DATA);
+    }
+
+    const updatedCourse = await courseService.createOrUpdateModuleStep({
+      courseId,
+      moduleId,
+      stepId,
+      stepName,
+      stepType,
+    });
+
+    res.json({ message: "Шаг успешно обновлен", course: updatedCourse });
+  }
+
+  async deleteModuleStep(
+    req: Request<DeleteModuleStepControllerParamsData>,
+    res: Response
+  ) {
+    const { courseId, moduleId, stepId } = req.params;
+
+    const updatedCourse = await courseService.deleteModuleStep({
+      courseId,
+      moduleId,
+      stepId,
+    });
+
+    res.json({ message: "Шаг успешно удален", course: updatedCourse });
   }
 }
 

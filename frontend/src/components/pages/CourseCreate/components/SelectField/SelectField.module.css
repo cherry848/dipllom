@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container > .title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.select {
+  position: relative;
+}
+
+.select .inner {
+  padding: 5px;
+  min-height: 30px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.select .inner .placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.select .inner img {
+  transform: rotate(180deg);
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+}
+
+.select .inner .value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.select .inner .values {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+}
+
+.select .content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.select.active .inner img {
+  transform: rotate(0);
+}
+
+.select.active .content {
+  padding: 5px 8px;
+  max-height: 300px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.select .content .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.select .content_list {
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.select .content_value {
+  padding: 0 5px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+}
+
+.select .content_value.active,
+.select .content_value:hover {
+  background: white;
+}

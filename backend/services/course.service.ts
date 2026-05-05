@@ -2,11 +2,15 @@ import { AppError, ErrorCodes } from "../appError";
 import courseModel from "../models/course.model";
 import {
   Course,
-  CreateCourseData,
+  CreateCourseServiceData,
+  CreateOrUpdateModuleServiceData,
+  CreateOrUpdateModuleStepServiceData,
+  DeleteModuleStepServiceData,
   GetCoursesBody,
+  UpdateCourseServiceData,
 } from "../types/course.types";
 import { BaseSort } from "../types/types";
-import { QueryOptions } from "mongoose";
+import { QueryOptions, Types } from "mongoose";
 import reviewModel from "../models/review.model";
 import { User } from "../types/user.types";
 
@@ -29,19 +33,15 @@ class CourseService {
     return courses;
   }
 
-  async create(
-    authorId: string,
-    { name, desc, category, duration, language }: CreateCourseData,
-  ) {
-    const course = await courseModel.create({
-      name,
-      desc,
-      authorId,
-      category,
-      duration,
-      language,
-    });
+  async create(data: CreateCourseServiceData) {
+    const course = (await courseModel.create(data)).toObject();
+    return course;
+  }
 
+  async updateCourse({ courseId, ...data }: UpdateCourseServiceData) {
+    const course = await courseModel
+      .findByIdAndUpdate(courseId, data, { new: true })
+      .lean();
     return course;
   }
 
@@ -59,11 +59,6 @@ class CourseService {
     // 🔹 CATEGORY
     if (body.category?.length) {
       filter.category = { $in: body.category };
-    }
-
-    // 🔹 LANGUAGE
-    if (body.language?.length) {
-      filter.language = { $in: body.language };
     }
 
     // 🔹 DURATION (через AND + OR)
@@ -150,7 +145,7 @@ class CourseService {
     const course = await courseModel.findByIdAndUpdate(
       _id,
       { img },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
 
     if (!course)
@@ -189,6 +184,149 @@ class CourseService {
     });
 
     return courses;
+  }
+
+  async createOrUpdateModule({
+    courseId,
+    moduleId,
+    moduleName,
+  }: CreateOrUpdateModuleServiceData) {
+    const course = await courseModel.findById(courseId);
+
+    if (!course) {
+      throw new AppError("Курс не найден", ErrorCodes.COURSE_NOT_FOUND);
+    }
+
+    // Update
+    if (moduleId) {
+      const currentModule = course.modules.find(
+        (module) => module._id.toString() === moduleId
+      );
+
+      if (!currentModule) {
+        throw new AppError(
+          "Модуль не найден",
+          ErrorCodes.COURSE_MODULE_NOT_FOUND
+        );
+      }
+
+      currentModule.moduleName = moduleName;
+
+      return await course.save();
+    }
+
+    // Create
+    course.modules.push({ _id: new Types.ObjectId(), moduleName, steps: [] });
+
+    return await course.save();
+  }
+
+  async deleteModule(courseId: string, moduleId: string) {
+    const course = await courseModel.findById(courseId);
+
+    if (!course) {
+      throw new AppError("Курс не найден", ErrorCodes.COURSE_NOT_FOUND);
+    }
+
+    const moduleIdx = course.modules.findIndex(
+      (module) => module._id.toString() === moduleId
+    );
+
+    if (moduleIdx === -1) {
+      throw new AppError(
+        "Модуль не найден",
+        ErrorCodes.COURSE_MODULE_NOT_FOUND
+      );
+    }
+
+    course.modules.splice(moduleIdx, 1);
+
+    return await course.save();
+  }
+
+  async createOrUpdateModuleStep({
+    courseId,
+    moduleId,
+    stepId,
+    stepName,
+    stepType,
+  }: CreateOrUpdateModuleStepServiceData) {
+    const course = await courseModel.findById(courseId);
+
+    if (!course) {
+      throw new AppError("Курс не найден", ErrorCodes.COURSE_NOT_FOUND);
+    }
+
+    const module = course.modules.find(
+      (module) => module._id.toString() === moduleId
+    );
+
+    if (!module) {
+      throw new AppError(
+        "Модуль не найден",
+        ErrorCodes.COURSE_MODULE_NOT_FOUND
+      );
+    }
+
+    // Update
+    if (stepId) {
+      const step = module.steps.find((step) => step._id.toString() === stepId);
+
+      if (!step) {
+        throw new AppError(
+          "Шаг не найден",
+          ErrorCodes.COURSE_MODULE_STEP_NOT_FOUND
+        );
+      }
+
+      step.stepName = stepName;
+      step.stepType = stepType;
+
+      return (await course.save()).toObject();
+    }
+
+    // Create
+    module.steps.push({ _id: new Types.ObjectId(), stepName, stepType });
+
+    return (await course.save()).toObject();
+  }
+
+  async deleteModuleStep({
+    courseId,
+    moduleId,
+    stepId,
+  }: DeleteModuleStepServiceData) {
+    const course = await courseModel.findById(courseId);
+
+    if (!course) {
+      throw new AppError("Курс не найден", ErrorCodes.COURSE_NOT_FOUND);
+    }
+
+    const module = course.modules.find(
+      (module) => module._id.toString() === moduleId
+    );
+
+    if (!module) {
+      throw new AppError(
+        "Модуль не найден",
+        ErrorCodes.COURSE_MODULE_NOT_FOUND
+      );
+    }
+
+    const stepIdx = module.steps.findIndex(
+      (step) => step._id.toString() === stepId
+    );
+
+    if (stepIdx === -1) {
+      throw new AppError(
+        "Шаг не найден",
+        ErrorCodes.COURSE_MODULE_STEP_NOT_FOUND
+      );
+    }
+
+    module.steps.splice(stepIdx, 1);
+
+    return (await course.save()).toObject();
   }
 }
 

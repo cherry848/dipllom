@@ -4,6 +4,7 @@ import { Modal } from "../../../shared/Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import c from "classnames";
+import { Link } from "react-router";
 
 type HeaderProps = {
   isLoading?: boolean;
@@ -16,7 +17,9 @@ export const Header = ({ isLoading }: HeaderProps) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
-        <img src="/logo.jpg" alt="logo" className={styles.logo} />
+        <Link to={"/"} className={styles.logo}>
+          <img src="/logo.jpg" alt="logo" />
+        </Link>
         <span className={styles.catalog}>
           <span>Каталог</span>
           <img

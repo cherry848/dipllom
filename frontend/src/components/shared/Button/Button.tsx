@@ -7,6 +7,7 @@ interface ButtonProps {
   children?: ReactNode;
   className?: string;
   onMouseDown?: (e: MouseEvent<HTMLButtonElement>) => void;
+  disable?: boolean;
 }
 
 export const Button = ({
@@ -14,10 +15,11 @@ export const Button = ({
   onMouseDown,
   children,
   className,
+  disable,
 }: ButtonProps) => {
   return (
     <button
-      className={cn(s.button, className)}
+      className={cn(s.button, disable && s.disable, className)}
       onMouseDown={onMouseDown}
       onClick={onClick}
     >

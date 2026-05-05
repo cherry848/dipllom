@@ -8,18 +8,24 @@ import { Button } from "../../shared/Button/Button";
 import s from "./CourseInfoPage.module.css";
 import cn from "classnames";
 import { Review } from "./components/Review/Review";
+import { BACK_URL } from "../../../utils/constants";
 
 export const CourseInfoPage = () => {
   const { id } = useParams();
 
-  const { data: { course, author, reviews } = {}, isLoading } =
-    useGetCourseByIdQuery(id ?? "");
+  const {
+    data: { course, author, reviews } = {},
+    isLoading,
+    isError,
+  } = useGetCourseByIdQuery(id ?? "");
 
   const activeCourseIds = useAppSelector(({ user }) => user.activeCourseIds);
 
   const isActiveCourse = activeCourseIds.includes(course?._id ?? "");
 
   if (isLoading) return <div>Загрузка</div>;
+
+  if (isError) return <div>Ошибка</div>;
 
   return (
     <div className={s.container}>
@@ -53,8 +59,9 @@ export const CourseInfoPage = () => {
           <div className={s.info}>
             <img
               src={
-                author?.avatar ??
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSioX88afXOaaIcnSn5uh7kfEYRewMTdO0-6Q&s"
+                author?.avatar
+                  ? BACK_URL + author.avatar
+                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSioX88afXOaaIcnSn5uh7kfEYRewMTdO0-6Q&s"
               }
             />
             <div className={s.name}>{author?.name}</div>

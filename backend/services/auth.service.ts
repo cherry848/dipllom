@@ -39,7 +39,7 @@ class AuthService {
     if (!user || !isMatch)
       throw new AppError(
         "Пользователь не найден или неверный пароль",
-        ErrorCodes.INVALID_CREDENTIALS,
+        ErrorCodes.INVALID_CREDENTIALS
       );
 
     return user;
@@ -69,7 +69,7 @@ class AuthService {
       (item: any) => ({
         course: item.courseId,
         progress: item.progress,
-      }),
+      })
     );
 
     return userObj;

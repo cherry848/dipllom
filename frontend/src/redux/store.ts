@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userSlice } from "./slices/user.slice";
 import { api } from "./api";
+import { updateCourseModuleSlice } from "./slices/updateCourseModule.slice";
 
 export const store = configureStore({
   reducer: {
     // slices
     user: userSlice.reducer,
+    updateCourseModule: updateCourseModuleSlice.reducer,
 
     //api
     [api.reducerPath]: api.reducer,
