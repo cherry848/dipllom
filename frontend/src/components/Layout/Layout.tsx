@@ -11,19 +11,15 @@ const Layout = () => {
   const { isLoading } = useAuthorizeQuery();
   const { show } = useAppSelector((state) => state.modal);
 
-  console.log(show);
-
   return (
     <div className={s.container}>
       <Header />
 
       <div className={s.content}>
         {isLoading ? <Loading className={s.loading} /> : <Outlet />}
-        {show && (
-          <Modal show={show}>
-            <AuthModal />
-          </Modal>
-        )}
+        <Modal show={show}>
+          <AuthModal />
+        </Modal>
       </div>
     </div>
   );
