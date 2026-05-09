@@ -15,7 +15,7 @@ const Layout = () => {
 
   return (
     <div className={s.container}>
-      <Header isLoading={isLoading} />
+      <Header />
 
       <div className={s.content}>
         {isLoading ? <Loading className={s.loading} /> : <Outlet />}
