@@ -18,6 +18,7 @@ import type {
   GetCourseRes,
   GetCatalogCoursesRes,
 } from "../types/course.types";
+import type { Module } from "../components/pages/CourseWalkthrough/components/CourseWalkthroughMenu/types/CourseWalkthroughMenu.types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -86,6 +87,7 @@ export const api = createApi({
             }))
           : ["Course"],
     }),
+    getModules: build.query<Module[], void>({query: () => ({url: "/modules", method: "GET"})})
   }),
 });
 
@@ -99,4 +101,5 @@ export const {
   useGetCourseByIdQuery,
   useGetCoursesByAuthorQuery,
   useLazyGetCatalogCoursesQuery,
+  useGetModulesQuery
 } = api;

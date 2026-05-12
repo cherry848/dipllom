@@ -1,0 +1,59 @@
+.menu {
+    width: 310px;
+    margin-top: 5px;
+    background: #E2E8F0;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #334155;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.moduleTitle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-left: 20px;
+    padding: 6px;
+    white-space: nowrap;
+    /* flex-wrap: nowrap; */
+}
+
+.moduleTitle span {
+    font-weight: 600;
+    font-size: 18px;
+    color: #334155;
+}
+
+.funnel {
+    width: 15px;
+    height: 15px;
+}
+
+
+.step {
+    display: flex;
+    gap: 4px;
+    padding-left: 56px;
+    padding-right: 27px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+}
+
+.step span {
+    font-weight: 600;
+    font-size: 16px;
+    color: #64748B;
+}
+
+.checked {
+    background: #4F46E5;
+}
+
+.checked span {
+    color: #ffffff;
+}

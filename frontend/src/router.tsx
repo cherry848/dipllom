@@ -5,6 +5,7 @@ import { CourseInfoPage } from "./components/pages/CourseInfoPage/CourseInfoPage
 import { Catalog } from "./components/pages/Catalog/Catalog";
 import { ProfilePage } from "./components/pages/ProfilePage/ProfilePage";
 import AuthRequired from "./utils/AuthRequired";
+import { CourseWalkthrough } from "./components/pages/CourseWalkthrough/CourseWalkthrough";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         children: [{ path: "info", element: <CourseInfoPage /> }],
       },
       { path: "catalog", element: <Catalog /> },
-      { path: "modules", element: <></> },
+      { path: "modules", element: <CourseWalkthrough/> },
     ],
   },
 ]);
