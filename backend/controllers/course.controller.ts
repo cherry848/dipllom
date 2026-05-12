@@ -74,6 +74,88 @@ class CourseController {
       next(error);
     }
   }
+
+  async getModules(res: Response) {
+    const modules = [
+      {
+        id: 1,
+        title: "Основы JavaScript",
+        steps: [
+          {
+            id: 1,
+            title: "Что такое JavaScript",
+            type: "lesson",
+            content: "JavaScript — язык программирования...",
+          },
+
+          {
+            id: 2,
+            title: "Тест по переменным",
+            type: "test",
+
+            questions: [
+              // один правильный ответ
+              {
+                id: 1,
+                question: "Как объявить переменную?",
+                multiple: false,
+
+                answers: [
+                  {
+                    id: 1,
+                    text: "let name",
+                    correct: true,
+                  },
+                  {
+                    id: 2,
+                    text: "variable name",
+                    correct: false,
+                  },
+                  {
+                    id: 3,
+                    text: "string name",
+                    correct: false,
+                  },
+                ],
+              },
+
+              // несколько правильных ответов
+              {
+                id: 2,
+                question: "Какие типы данных существуют?",
+                multiple: true,
+
+                answers: [
+                  {
+                    id: 1,
+                    text: "string",
+                    correct: true,
+                  },
+                  {
+                    id: 2,
+                    text: "number",
+                    correct: true,
+                  },
+                  {
+                    id: 3,
+                    text: "table",
+                    correct: false,
+                  },
+                  {
+                    id: 4,
+                    text: "boolean",
+                    correct: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    res.json({ modules });
+  }
 }
 
 export const courseController = new CourseController();
