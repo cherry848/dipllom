@@ -8,7 +8,7 @@ type UserState = User & {
   isLoading: boolean;
 };
 
-const INITIAL_STATE: UserState = {
+const USER_INITIAL_STATE: UserState = {
   _id: "",
   isAuth: false,
   isLoading: true,
@@ -23,17 +23,20 @@ const INITIAL_STATE: UserState = {
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: INITIAL_STATE,
+  initialState: USER_INITIAL_STATE,
   reducers: {},
   extraReducers(build) {
     build.addMatcher(
       api.endpoints.authorize.matchFulfilled,
       (_, { payload }) => {
         return { ...payload.user, isAuth: true, isLoading: false };
-      }
+      },
     );
     build.addMatcher(api.endpoints.authorize.matchRejected, () => {
-      return { ...INITIAL_STATE, isLoading: false };
+      return { ...USER_INITIAL_STATE, isLoading: false };
     });
   },
 });
+
+// const [modal, setModal] = useState({ show: false, type: "login" });
+//  const [data, setData] = useState({ email: "", password: "" });

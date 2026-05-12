@@ -64,10 +64,9 @@ class AuthService {
 
     const userObj = user.toObject();
 
-    // 🔥 преобразуем courseId → course
     (userObj as any).coursesProgress = userObj.coursesProgress.map(
       (item: any) => ({
-        course: item.courseId,
+        ...item.courseId,
         progress: item.progress,
       }),
     );

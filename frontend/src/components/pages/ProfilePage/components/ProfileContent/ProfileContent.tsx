@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { useAppSelector } from "../../../../../hooks/reduxHooks";
 import { Button } from "../../../../shared/Button/Button";
 import s from "./ProfileContent.module.css";

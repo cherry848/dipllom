@@ -1,17 +1,18 @@
-import { useState } from "react";
 import styles from "./Header.module.css";
 import { Modal } from "../../../shared/Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
-import { useAppSelector } from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import c from "classnames";
+import {
+  changeType,
+  clearModal,
+  toggle,
+} from "../../../../redux/slices/modal.slice";
 
-type HeaderProps = {
-  isLoading?: boolean;
-};
-
-export const Header = ({ isLoading }: HeaderProps) => {
-  const [modal, setModal] = useState({ show: false, type: "login" });
+export const Header = () => {
   const { name, avatar } = useAppSelector((state) => state.user);
+  const { show } = useAppSelector((state) => state.modal);
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.header}>
@@ -47,7 +48,9 @@ export const Header = ({ isLoading }: HeaderProps) => {
         <div className={styles.buttons}>
           <button
             onClick={() => {
-              setModal({ show: true, type: "login" });
+              dispatch(clearModal());
+              dispatch(toggle());
+              dispatch(changeType("Войти"));
             }}
             className={styles.button}
           >
@@ -55,7 +58,9 @@ export const Header = ({ isLoading }: HeaderProps) => {
           </button>
           <button
             onClick={() => {
-              setModal({ show: true, type: "register" });
+              dispatch(clearModal());
+              dispatch(toggle());
+              dispatch(changeType("Зарегистрироваться"));
             }}
             className={styles.button}
           >
@@ -63,28 +68,7 @@ export const Header = ({ isLoading }: HeaderProps) => {
           </button>
         </div>
       )}
-      <Modal
-        show={modal.show}
-        onClose={() => {
-          setModal({ show: false, type: "login" });
-        }}
-      >
-        {modal.type === "login" ? (
-          <AuthModal
-            auth="Войти"
-            onClose={() => {
-              setModal({ show: false, type: "login" });
-            }}
-          />
-        ) : (
-          <AuthModal
-            auth="Зарегистрироваться"
-            onClose={() => {
-              setModal({ show: false, type: "login" });
-            }}
-          />
-        )}
-      </Modal>
+      <Modal>{show && <AuthModal />}</Modal>
     </div>
   );
 };
