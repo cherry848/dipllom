@@ -1,6 +1,82 @@
 import { Schema, model } from "mongoose";
 import { Course } from "../types/course.types";
 
+const AnswerSchema = new Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+
+    correct: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  { _id: true },
+);
+
+const QuestionSchema = new Schema(
+  {
+    question: {
+      type: String,
+      required: true,
+    },
+
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
+
+    answers: {
+      type: [AnswerSchema],
+      default: [],
+    },
+  },
+  { _id: true },
+);
+
+const StepSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+
+    type: {
+      type: String,
+      enum: ["lesson", "test"],
+      required: true,
+    },
+
+    content: {
+      type: String,
+      default: "",
+    },
+
+    questions: {
+      type: [QuestionSchema],
+      default: [],
+    },
+  },
+  { _id: true },
+);
+
+const ModuleSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+
+    steps: {
+      type: [StepSchema],
+      default: [],
+    },
+  },
+  { _id: true },
+);
+
 const CourseSchema = new Schema<Course>(
   {
     name: { type: String, required: true },
@@ -20,6 +96,10 @@ const CourseSchema = new Schema<Course>(
         ref: "Review",
       },
     ],
+    modules: {
+      type: [ModuleSchema],
+      default: [],
+    },
   },
   { timestamps: true },
 );

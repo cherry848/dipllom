@@ -11,7 +11,7 @@
     font-weight: 600;
     font-size: 24px;
     color: #334155;
-    margin: 54px 0 20px 0;
+    margin: 54px 0 50px 0;
 }
 
 .description {
@@ -28,5 +28,30 @@
     border: 1px solid #4338CA;
     background: none;
     align-self: flex-end;
-    margin-top: auto;
+    margin-top: 150px;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-bottom: 10px;
+}
+
+.questionsTitle {
+    font-weight: 600;
+    font-size: 26px;
+    color: #000000;
+}
+
+.answersGroup {
+    display: flex;
+    gap: 5px;
+    /* align-self: flex-start; */
+}
+
+.text {
+    font-weight: 400;
+    font-size: 24px;
+    color: #000000;
 }

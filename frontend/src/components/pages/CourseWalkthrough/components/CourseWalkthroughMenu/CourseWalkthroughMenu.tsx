@@ -22,13 +22,13 @@ export const CourseWalkthroughMenu = ({
     <div className={s.menu}>
       <h1 className={s.title}>{name}</h1>
       <div className={s.modules}>
-        {modules.map((module) => {
+        {modules.map((module, idx) => {
           return (
             <div key={module.id} className={s.module}>
               <h1 className={s.moduleTitle}>
                 <img className={s.funnel} src="/Funnel.svg" alt="" />
                 <span className={s.moduleName}>
-                  Модуль {module.id}. {module.title}
+                  Модуль {idx + 1}. {module.title}
                 </span>
               </h1>
               {module.steps.map((step, idx) => {
@@ -42,7 +42,7 @@ export const CourseWalkthroughMenu = ({
                   >
                     <Checkbox checked={passedSteps[step.id]} />
                     <span>
-                      Урок {step.id}. {step.title}
+                      Урок {idx + 1}. {step.title}
                     </span>
                   </div>
                 );

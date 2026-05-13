@@ -87,7 +87,23 @@ export const api = createApi({
             }))
           : ["Course"],
     }),
-    getModules: build.query<Module[], void>({query: () => ({url: "/modules", method: "GET"})})
+    getModules: build.query<Module[], void>({
+      query: () => ({ url: "/modules", method: "GET" }),
+    }),
+    lessonComplete: build.mutation({
+      query: (data) => ({
+        url: "/course-progress/lesson/complete",
+        method: "POST",
+        data,
+      }),
+    }),
+    testSubmit: build.mutation({
+      query: (data) => ({
+        url: "/course-progress/lesson/complete",
+        method: "POST",
+        data,
+      }),
+    }),
   }),
 });
 
@@ -101,5 +117,7 @@ export const {
   useGetCourseByIdQuery,
   useGetCoursesByAuthorQuery,
   useLazyGetCatalogCoursesQuery,
-  useGetModulesQuery
+  useGetModulesQuery,
+  useLessonCompleteMutation,
+  useTestSubmitMutation
 } = api;
