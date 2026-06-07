@@ -62,16 +62,7 @@ class AuthService {
 
     if (!user) throw new AppError("юзер не найден", ErrorCodes.USER_NOT_FOUND);
 
-    const userObj = user.toObject();
-
-    (userObj as any).coursesProgress = userObj.coursesProgress.map(
-      (item: any) => ({
-        ...item.courseId,
-        progress: item.progress,
-      }),
-    );
-
-    return userObj;
+    return user;
   }
 
   getTokens(userId: string): AuthGetTokensServiceReturnData {

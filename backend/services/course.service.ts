@@ -9,6 +9,7 @@ import { BaseSort } from "../types/types";
 import { QueryOptions } from "mongoose";
 import reviewModel from "../models/review.model";
 import { User } from "../types/user.types";
+import progressModel from "../models/progress.model";
 
 class CourseService {
   async getCourses(sort: BaseSort) {
@@ -189,6 +190,10 @@ class CourseService {
     });
 
     return courses;
+  }
+
+  async completeLesson(userId: string, courseId: string, stepId: string) {
+    const progress = progressModel.findOne;
   }
 }
 

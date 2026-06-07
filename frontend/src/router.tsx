@@ -24,10 +24,12 @@ const router = createBrowserRouter([
       { path: "settings", element: <MainPage /> },
       {
         path: "course/:id",
-        children: [{ path: "info", element: <CourseInfoPage /> }],
+        children: [
+          { path: "info", element: <CourseInfoPage /> },
+          { path: "walkthrough", element: <CourseWalkthrough /> },
+        ],
       },
       { path: "catalog", element: <Catalog /> },
-      { path: "modules", element: <CourseWalkthrough/> },
     ],
   },
 ]);

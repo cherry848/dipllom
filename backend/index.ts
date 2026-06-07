@@ -4,12 +4,12 @@ import mongoose from "mongoose";
 import express from "express";
 import authRouter from "./routes/auth.routes";
 import coursesRouter from "./routes/courses.routes";
-import courseProgressRouter from "./routes/course-progress.routes"
+import courseProgressRouter from "./routes/course-progress.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
 import path from "path";
-import courseModel from "./models/course.model";
-
+import Progress from "./models/progress.model";
+import TestAnswer from "./models/testAnswer.model";
 dotenv.config();
 
 const PORT = process.env.PORT ?? 3000;
@@ -36,9 +36,11 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);
 
+console.log(Progress);
+console.log(TestAnswer);
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(1);
 
   mongoose
     .connect(MONGO_URL)

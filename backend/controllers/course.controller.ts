@@ -6,6 +6,7 @@ import {
   GetCoursesBody,
 } from "../types/course.types";
 import { AppError, ErrorCodes } from "../appError";
+import progressModel from "../models/progress.model";
 
 class CourseController {
   async create(
@@ -306,7 +307,147 @@ class CourseController {
       },
     ];
 
-    res.json({modules, passedSteps: []});
+    // res.json({modules, passedSteps: []});
+    res.json(modules);
+  }
+
+  async getCourseWalkthrough(
+    req: Request<{ courseId: string; userId: string }>,
+    res: Response,
+  ) {
+    const progress = await progressModel.findOne({
+      courseId: req.params.courseId,
+      userId: req.params.userId,
+    });
+
+    console.log(progress);
+
+    const course = {
+      title: "Python для начинающих",
+      modules: [
+        {
+          title: "Переменные",
+          moduleId: "jfjslei",
+          steps: [
+            {
+              stepId: "fffff",
+              title: "Теория",
+              type: "theory",
+              theoryContent:
+                "Переменные Python asd asda asdsad sda sda sda sda ",
+            },
+            {
+              stepId: "step-1",
+              title: "Тестирование",
+              type: "test",
+              testContent: [
+                {
+                  questionTitle: "Зачем переменные?",
+                  answers: [
+                    { title: "Затем", answerId: "fffsdddd" },
+                    { title: "Потому что", answerId: "bbnbnbnb" },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          title: "Функции",
+          moduleId: "module_functions_001",
+          steps: [
+            {
+              stepId: "func_theory_01",
+              title: "Теория функций",
+              type: "theory",
+              theoryContent:
+                "Функции в Python позволяют группировать код в переиспользуемые блоки. Они могут принимать параметры и возвращать значения.",
+            },
+            {
+              stepId: "step-2",
+              title: "Тест по функциям",
+              type: "test",
+              testContent: [
+                {
+                  questionTitle: "Что делает функция?",
+                  questionId: "QUESTION__1",
+                  answers: [
+                    {
+                      title: "Выполняет набор инструкций",
+                      answerId: "ans_func_1",
+                    },
+                    { title: "Удаляет код", answerId: "ans_func_2" },
+                  ],
+                },
+                {
+                  questionTitle: "Как обозначается функция в Python?",
+                  questionId: "QUESTION__2",
+                  answers: [
+                    { title: "def", answerId: "ans_func_3" },
+                    { title: "function", answerId: "ans_func_4" },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    res.json({ progress, course });
+  }
+
+  async completeLesson(
+    req: Request<{ courseId: string; stepId: string; userId: string }>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { courseId, stepId, userId } = req.params;
+
+      // ищем progress
+      let progress = await progressModel.findOne({
+        courseId,
+        userId,
+      });
+
+      // если нет — создаём
+      if (!progress) {
+        progress = await progressModel.create({
+          courseId,
+          userId,
+          progress: 0,
+          progressByStepId: [],
+        });
+      }
+
+      // проверяем есть ли уже этот step
+      const existingStep = progress.progressByStepId.find(
+        (s) => s.stepId.toString() === stepId,
+      );
+
+      if (existingStep) {
+        // если уже есть — просто обновляем
+        existingStep.completed = true;
+        existingStep.answers = [];
+      } else {
+        // если нет — добавляем новый
+        progress.progressByStepId.push({
+          stepId,
+          completed: true,
+          answers: [],
+        });
+      }
+
+      await progress.save();
+
+      return res.json({
+        message: "Lesson completed",
+        progress,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 

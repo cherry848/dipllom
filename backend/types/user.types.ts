@@ -6,10 +6,7 @@ export type User = {
   password: string;
   name: string;
   avatar: string | null;
-  coursesProgress: {
-    courseId: Types.ObjectId;
-    progress: number;
-  }[];
+  coursesProgress: Types.ObjectId;
   activeCourseIds: string[];
   createdAt: Date;
   updatedAt: Date;

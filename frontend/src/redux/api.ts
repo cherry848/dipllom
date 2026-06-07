@@ -17,6 +17,10 @@ import type {
   GetCatalogCoursesReq,
   GetCourseRes,
   GetCatalogCoursesRes,
+  GetCoursesWalkthroughRes,
+  GetCoursesWalkthroughReq,
+  CompleteLessonRes,
+  CompleteLessonReq,
 } from "../types/course.types";
 import type { Module } from "../components/pages/CourseWalkthrough/components/CourseWalkthroughMenu/types/CourseWalkthroughMenu.types";
 
@@ -90,18 +94,19 @@ export const api = createApi({
     getModules: build.query<Module[], void>({
       query: () => ({ url: "/modules", method: "GET" }),
     }),
-    lessonComplete: build.mutation({
-      query: (data) => ({
-        url: "/course-progress/lesson/complete",
-        method: "POST",
-        data,
+    getCourseWalkthrough: build.query<
+      GetCoursesWalkthroughRes,
+      GetCoursesWalkthroughReq
+    >({
+      query: ({ courseId, userId }) => ({
+        url: `/course/${courseId}/${userId}/walkthrough`,
+        method: "GET",
       }),
     }),
-    testSubmit: build.mutation({
-      query: (data) => ({
-        url: "/course-progress/lesson/complete",
+    completeLesson: build.mutation<CompleteLessonRes, CompleteLessonReq>({
+      query: ({ courseId, userId, stepId }) => ({
+        url: `/course/${courseId}/${userId}/${stepId}/progress`,
         method: "POST",
-        data,
       }),
     }),
   }),
@@ -118,6 +123,6 @@ export const {
   useGetCoursesByAuthorQuery,
   useLazyGetCatalogCoursesQuery,
   useGetModulesQuery,
-  useLessonCompleteMutation,
-  useTestSubmitMutation
+  useGetCourseWalkthroughQuery,
+  useCompleteLessonMutation,
 } = api;

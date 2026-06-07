@@ -1,24 +1,21 @@
 export type Question = {
-  id: string;
-  question: string;
-  multiple: boolean;
+  questionTitle: string;
   answers: {
-    id: string;
-    text: string;
-    correct: boolean;
+    answerId: string;
+    title: string;
   }[];
 };
 
 export type Step = {
-  id: string;
+  stepId: string;
   title: string;
   type: "theory" | "test";
-  content?: string;
-  questions?: Question[];
+  theoryContent?: string;
+  testContent?: Question[];
 };
 
 export type Module = {
-  id: string;
+  moduleId: string;
   title: string;
   steps: Step[];
 };
