@@ -11,3 +11,8 @@
   line-height: 100%;
   cursor: pointer;
 }
+
+.button.disable {
+  background: #89888d;
+  pointer-events: none;
+}

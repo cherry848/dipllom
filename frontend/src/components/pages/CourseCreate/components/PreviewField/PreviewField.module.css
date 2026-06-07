@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.container.hasImg .area img {
+  display: none;
+}
+
+.container.hasImg .area .black {
+  display: none;
+}
+
+.area {
+  position: relative;
+  flex-shrink: 0;
+  height: 87px;
+  width: 87px;
+  background: #d9d9d9;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.area .black {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.53);
+}
+
+.area img {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.container input {
+  display: none;
+}

@@ -2,21 +2,40 @@ import { AppError, ErrorCodes } from "../appError";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-const STATUS_BY_CODE = new Map<ErrorCodes, number>([
-  [ErrorCodes.USER_EXIST, 409],
-  [ErrorCodes.USER_NOT_FOUND, 404],
-  [ErrorCodes.TOKEN_ERROR, 401],
-  [ErrorCodes.INVALID_CREDENTIALS, 400],
-  [ErrorCodes.COURSE_NOT_FOUND, 666],
-]);
-
-const ERROR_MESSAGE_BY_CODE = new Map<ErrorCodes, string>([
-  [ErrorCodes.USER_EXIST, "User with this email already exists"],
-  [ErrorCodes.USER_NOT_FOUND, "User not found"],
-  [ErrorCodes.TOKEN_ERROR, "Not authenticated"],
-  [ErrorCodes.INVALID_CREDENTIALS, "Invalid email or password"],
-  [ErrorCodes.COURSE_NOT_FOUND, "Course not found"],
-]);
+export const ERROR_CONFIG: Record<
+  ErrorCodes,
+  { status: number; message: string }
+> = {
+  [ErrorCodes.USER_EXIST]: {
+    status: 409,
+    message: "User with this email already exists",
+  },
+  [ErrorCodes.USER_NOT_FOUND]: {
+    status: 404,
+    message: "User not found",
+  },
+  [ErrorCodes.TOKEN_ERROR]: {
+    status: 401,
+    message: "Not authenticated",
+  },
+  [ErrorCodes.INVALID_DATA]: { status: 400, message: "Invalid data" },
+  [ErrorCodes.INVALID_CREDENTIALS]: {
+    status: 400,
+    message: "Invalid email or password",
+  },
+  [ErrorCodes.COURSE_NOT_FOUND]: {
+    status: 666,
+    message: "Course not found",
+  },
+  [ErrorCodes.COURSE_MODULE_NOT_FOUND]: {
+    status: 667,
+    message: "Course module not found",
+  },
+  [ErrorCodes.COURSE_MODULE_STEP_NOT_FOUND]: {
+    status: 668,
+    message: "Step not found",
+  },
+};
 
 const DEFAULT_STATUS = 500;
 const DEFAULT_MESSAGE = "Internal Server Error";
@@ -30,8 +49,7 @@ export const errorHandler = (
   console.log("error middleware", error);
 
   if (error instanceof AppError) {
-    const status = STATUS_BY_CODE.get(error.code) ?? DEFAULT_STATUS;
-    const message = ERROR_MESSAGE_BY_CODE.get(error.code) ?? DEFAULT_MESSAGE;
+    const { status, message } = ERROR_CONFIG[error.code];
 
     return res.status(status).json({ message });
   }
@@ -40,9 +58,7 @@ export const errorHandler = (
     error instanceof jwt.JsonWebTokenError ||
     error instanceof jwt.TokenExpiredError
   ) {
-    const status = STATUS_BY_CODE.get(ErrorCodes.TOKEN_ERROR) ?? DEFAULT_STATUS;
-    const message =
-      ERROR_MESSAGE_BY_CODE.get(ErrorCodes.TOKEN_ERROR) ?? DEFAULT_MESSAGE;
+    const { status, message } = ERROR_CONFIG[ErrorCodes.TOKEN_ERROR];
 
     return res.status(status).json({ message });
   }

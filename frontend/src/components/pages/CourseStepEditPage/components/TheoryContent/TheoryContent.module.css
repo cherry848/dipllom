@@ -1,0 +1,40 @@
+.container {
+  max-width: 712px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-label)::before,
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-item)::before {
+  content: "Обычный";
+}
+
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-label[data-value="1"])::before,
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-item[data-value="1"])::before {
+  content: "Заголовок 1";
+}
+
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-label[data-value="2"])::before,
+.editor
+  :global(.ql-snow)
+  :global(.ql-picker.ql-header)
+  :global(.ql-picker-item[data-value="2"])::before {
+  content: "Заголовок 2";
+}

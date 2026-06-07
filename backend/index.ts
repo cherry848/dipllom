@@ -5,11 +5,13 @@ import express from "express";
 import authRouter from "./routes/auth.routes";
 import coursesRouter from "./routes/courses.routes";
 import courseProgressRouter from "./routes/course-progress.routes";
+import Progress from "./models/progress.model";
+import TestAnswer from "./models/testAnswer.model";
+import answerRouter from "./routes/answers.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
 import path from "path";
-import Progress from "./models/progress.model";
-import TestAnswer from "./models/testAnswer.model";
+
 dotenv.config();
 
 const PORT = process.env.PORT ?? 3000;
@@ -32,6 +34,7 @@ app.use(cookieParser());
 app.use("/api", authRouter);
 app.use("/api", coursesRouter);
 app.use("/rrr", courseProgressRouter);
+app.use("/api", answerRouter);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);

@@ -3,6 +3,7 @@ import { Modal } from "../../../shared/Modal/Modal";
 import { AuthModal } from "../../../AuthModal/AuthModal";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import c from "classnames";
+import { Link } from "react-router";
 import {
   changeType,
   clearModal,
@@ -17,7 +18,9 @@ export const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
-        <img src="/logo.jpg" alt="logo" className={styles.logo} />
+        <Link to={"/"} className={styles.logo}>
+          <img src="/logo.jpg" alt="logo" />
+        </Link>
         <span className={styles.catalog}>
           <span>Каталог</span>
           <img

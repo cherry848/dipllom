@@ -2,8 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { getHeaderAccessToken } from "../utils/jwt.utils";
 import jwt from "jsonwebtoken";
 import { AppError, ErrorCodes } from "../appError";
-
-const JWT_SECRET = process.env.JWT_SECRET || "secretKey";
+import { authService } from "../services/auth.service";
 
 export const authCheckMiddleware = async (
   req: Request,
@@ -16,7 +15,9 @@ export const authCheckMiddleware = async (
     if (!accessToken)
       throw new AppError("чет с токеном", ErrorCodes.TOKEN_ERROR);
 
-    jwt.verify(accessToken, JWT_SECRET);
+    const user = await authService.authorize(accessToken);
+
+    req.userId = user._id;
 
     next();
   } catch (error) {
