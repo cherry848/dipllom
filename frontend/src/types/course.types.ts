@@ -59,7 +59,15 @@ export type Course = {
   users: string[];
   tags: string[];
   reviews: string[];
-  progress?: number;
+};
+
+export type CourseProgress = {
+  _id: string;
+  name: string;
+  img: string;
+  desc: string;
+  rating: number;
+  progress: number;
 };
 
 export type GetCourseRes = {

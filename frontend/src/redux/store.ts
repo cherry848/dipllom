@@ -3,6 +3,7 @@ import { userSlice } from "./slices/user.slice";
 import { api } from "./api";
 import { updateCourseModuleSlice } from "./slices/updateCourseModule.slice";
 import { updateCourseModuleStepContentSlice } from "./slices/updateCourseModuleStepContent.slice";
+import { modalSlice } from "./slices/modal.slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,8 @@ export const store = configureStore({
     user: userSlice.reducer,
     updateCourseModule: updateCourseModuleSlice.reducer,
     updateCourseModuleStep: updateCourseModuleStepContentSlice.reducer,
+
+    modal: modalSlice.reducer,
 
     //api
     [api.reducerPath]: api.reducer,
