@@ -39,6 +39,25 @@ export const CourseStepEditPage = () => {
   if (isError || !stepData) return "Ошибка";
 
   const handleSave = async () => {
+    const mappedTest: CreateOrUpdateStepContent[typeof COURSE_MODULE_STEPS.Test] =
+      stepData.content[COURSE_MODULE_STEPS.Test]?.map((question) => ({
+        question: question.question,
+        multiple: question.multiple,
+        variants: [],
+      })) ?? [];
+
+    createOrUpdateStep({
+      courseId: courseId ?? "",
+      moduleId: moduleId ?? "",
+      stepId: stepId ?? "",
+      stepName: stepData.stepName,
+      stepType: stepData.stepType,
+      content: {
+        theory: stepData.content?.[COURSE_MODULE_STEPS.Theory],
+        test: mappedTest,
+      },
+    });
+
     const answerByOldId: Partial<Record<string, TestAnswer>> = {};
 
     for (const question of stepData.content[COURSE_MODULE_STEPS.Test]) {
