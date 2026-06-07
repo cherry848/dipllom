@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 import express from "express";
 import authRouter from "./routes/auth.routes";
 import coursesRouter from "./routes/courses.routes";
+import answerRouter from "./routes/answers.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import cors from "cors";
 import path from "path";
-import courseModel from "./models/course.model";
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ app.use(cookieParser());
 
 app.use("/api", authRouter);
 app.use("/api", coursesRouter);
+app.use("/api", answerRouter);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);

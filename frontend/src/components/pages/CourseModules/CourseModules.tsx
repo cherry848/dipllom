@@ -19,7 +19,7 @@ export const CourseModules = () => {
     data: { course } = {},
     isLoading,
     isError,
-  } = useGetCourseByIdQuery(courseId ?? "");
+  } = useGetCourseByIdQuery({ courseId: courseId ?? "" });
 
   const { modules } = useAppSelector((state) => state.updateCourseModule);
 

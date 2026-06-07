@@ -1,0 +1,23 @@
+.container {
+  padding-left: 20px;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add_question {
+  cursor: pointer;
+  margin-right: auto;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #64748b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

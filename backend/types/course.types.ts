@@ -15,10 +15,26 @@ export const COURSE_MODULE_STEP_TYPE_LABELS: Record<
   [COURSE_MODULE_STEPS.Test]: "Тест",
   [COURSE_MODULE_STEPS.Theory]: "Теория",
 };
+
+export type CourseModuleStepTheoryContent = string;
+
+export type CourseModuleStepTestContent = {
+  _id: string;
+  question: string;
+  multiple?: boolean;
+  variants: Types.ObjectId[];
+};
+
+export type CourseModuleStepContent = {
+  [COURSE_MODULE_STEPS.Theory]?: CourseModuleStepTheoryContent;
+  [COURSE_MODULE_STEPS.Test]?: CourseModuleStepTestContent[];
+};
+
 export type CourseModuleStep = {
   _id: Types.ObjectId;
   stepName: string;
   stepType: CourseModuleStepsUnion;
+  content: CourseModuleStepContent;
 };
 
 export type CourseModule = {
@@ -117,11 +133,23 @@ export type CreateOrUpdateModuleStepControllerParamsData = {
   moduleId: string;
 };
 
+type CreateOrUpdateModuleStepContentTest = Omit<
+  CourseModuleStepTestContent,
+  "_id" | "variants"
+> & {
+  variants: { variant: string; isCorrect?: boolean }[];
+};
+
+export type CreateOrUpdateModuleStepContentController = {
+  [COURSE_MODULE_STEPS.Theory]?: string;
+  [COURSE_MODULE_STEPS.Test]?: CreateOrUpdateModuleStepContentTest[];
+};
+
 export type CreateOrUpdateModuleStepControllerData = {
-  moduleId: string;
   stepId?: string;
   stepName: string;
   stepType: CourseModuleStepsUnion;
+  content?: CreateOrUpdateModuleStepContentController;
 };
 
 export type CreateOrUpdateModuleStepServiceData = {
@@ -147,4 +175,11 @@ export type DeleteModuleStepServiceData = {
   courseId: string;
   moduleId: string;
   stepId: string;
+};
+
+export type UpdateStepContentService = {
+  courseId: string;
+  moduleId: string;
+  stepId: string;
+  content: CreateOrUpdateModuleStepContentController;
 };

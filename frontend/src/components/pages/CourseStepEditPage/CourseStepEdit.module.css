@@ -1,5 +1,7 @@
 .container {
   padding: 25px 130px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -8,22 +10,30 @@
   gap: 10px;
 }
 
+.header .back {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #334155;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.header .back img {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
 .header .type {
   font-weight: 700;
   font-size: 20px;
   color: #334155;
 }
 
-.content {
-  border: 1px solid red;
-  max-width: 712px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.content .btn {
-  margin-left: auto;
+.btn {
+  margin-top: 10px;
   width: 216px;
 }

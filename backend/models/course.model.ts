@@ -1,23 +1,48 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import {
   Course,
   COURSE_MODULE_STEPS,
   CourseModule,
   CourseModuleStep,
+  CourseModuleStepTestContent,
 } from "../types/course.types";
 
-const CourseModuleStep = new Schema<CourseModuleStep>({
+const CourseModuleStepTestContentSchema =
+  new Schema<CourseModuleStepTestContent>({
+    multiple: Boolean,
+    question: { type: String, required: true },
+    variants: {
+      type: [Types.ObjectId],
+      default: [],
+      required: true,
+      ref: "TestAnswer",
+    },
+  });
+
+const CourseModuleStepContentSchema = new Schema<CourseModuleStep>({
   stepName: { type: String, required: true },
   stepType: {
     type: String,
     enum: Object.values(COURSE_MODULE_STEPS),
     required: true,
   },
+  content: {
+    type: {
+      theory: { type: String, default: "" },
+      test: {
+        type: [CourseModuleStepTestContentSchema],
+        default: [],
+      },
+    },
+    required: true,
+    default: {},
+    _id: false,
+  },
 });
 
 const CourseModuleSchema = new Schema<CourseModule>({
   moduleName: { type: String, required: true },
-  steps: [CourseModuleStep],
+  steps: [CourseModuleStepContentSchema],
 });
 
 const CourseSchema = new Schema<Course>(

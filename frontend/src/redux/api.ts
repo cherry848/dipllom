@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { axiosBaseQuery } from "../utils/axios";
+import { axios, axiosBaseQuery } from "../utils/axios";
 import {
   type UserUpdateRes,
   type VerifyPasswordReq,
@@ -31,12 +31,19 @@ import type {
   CreateOrUpdateCourseModuleStepReq,
   DeleteCourseModuleStepReq,
   DeleteCourseModuleStepRes,
+  GetCourseReq,
 } from "../types/course.types";
+import type {
+  CreateOrUpdateAnswerReq,
+  CreateOrUpdateAnswerRes,
+  TestAnswer,
+} from "../types/testAnswer.types";
+import { updateCourseModuleStepContentSlice } from "./slices/updateCourseModuleStepContent.slice";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ["User", "Course"],
+  tagTypes: ["User", "Course", "Answer"],
   endpoints: (build) => ({
     // Auth
     authorize: build.query<AuthAuthorizeRes, void>({
@@ -82,10 +89,29 @@ export const api = createApi({
       query: (params) => ({ url: "/courses", params }),
     }),
 
-    getCourseById: build.query<GetCourseRes, string>({
-      query: (id) => ({ url: `/course/${id}` }),
+    getCourseById: build.query<GetCourseRes, GetCourseReq>({
+      query: ({ courseId }) => ({ url: `/course/${courseId}` }),
       providesTags: (result) =>
         result ? [{ type: "Course", id: result.course._id }] : ["Course"],
+      onQueryStarted: async (data, { dispatch }) => {
+        const { fetchAnswers, courseId } = data;
+        if (!fetchAnswers) return;
+
+        const { answers }: { answers: TestAnswer[] } = (
+          await axios.get(`/course/${courseId}/answers`)
+        ).data;
+
+        answers.forEach((answer) => {
+          dispatch(
+            updateCourseModuleStepContentSlice.actions.setAnswer({
+              answerId: answer._id,
+              questionId: answer.questionId,
+              correct: answer.correct,
+              text: answer.answer,
+            })
+          );
+        });
+      },
     }),
 
     getCoursesByAuthor: build.query<Course[], string>({
@@ -185,6 +211,21 @@ export const api = createApi({
       invalidatesTags: (result) =>
         result ? [{ type: "Course", id: result.course._id }] : ["Course"],
     }),
+
+    // Answer
+
+    createOrUpdateAnswer: build.mutation<
+      ResBase<CreateOrUpdateAnswerRes>,
+      CreateOrUpdateAnswerReq
+    >({
+      query: (data) => ({
+        url: "/answer/create-or-update",
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: (result) =>
+        result ? [{ type: "Answer", id: result.answer._id }] : ["Answer"],
+    }),
   }),
 });
 
@@ -205,4 +246,5 @@ export const {
   useDeleteCourseModuleMutation,
   useCreateOrUpdateCourseModuleStepMutation,
   useDeleteCourseModuleStepMutation,
+  useCreateOrUpdateAnswerMutation,
 } = api;

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { courseService } from "../services/course.service";
 import {
+  COURSE_MODULE_STEPS,
   CreateCourseControllerBodyData,
   CreateOrUpdateModuleControllerBodyData,
   CreateOrUpdateModuleStepControllerData,
@@ -139,19 +140,32 @@ class CourseController {
     res: Response
   ) {
     const { courseId, moduleId } = req.params;
-    const { stepName, stepType, stepId } = req.body ?? {};
+    const { stepName, stepType, stepId, content } = req.body ?? {};
 
-    if (!moduleId || !stepName || !stepType) {
+    if (!stepName || !stepType) {
       throw new AppError("Не хватает данных", ErrorCodes.INVALID_DATA);
     }
 
-    const updatedCourse = await courseService.createOrUpdateModuleStep({
+    let updatedCourse = await courseService.createOrUpdateModuleStep({
       courseId,
       moduleId,
       stepId,
       stepName,
       stepType,
     });
+
+    if (content) {
+      if (!stepId) {
+        throw new AppError("Не хватает данных", ErrorCodes.INVALID_DATA);
+      }
+
+      updatedCourse = await courseService.updateStepContent({
+        courseId,
+        moduleId,
+        stepId,
+        content,
+      });
+    }
 
     res.json({ message: "Шаг успешно обновлен", course: updatedCourse });
   }

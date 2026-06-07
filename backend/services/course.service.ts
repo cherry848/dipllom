@@ -2,12 +2,14 @@ import { AppError, ErrorCodes } from "../appError";
 import courseModel from "../models/course.model";
 import {
   Course,
+  COURSE_MODULE_STEPS,
   CreateCourseServiceData,
   CreateOrUpdateModuleServiceData,
   CreateOrUpdateModuleStepServiceData,
   DeleteModuleStepServiceData,
   GetCoursesBody,
   UpdateCourseServiceData,
+  UpdateStepContentService,
 } from "../types/course.types";
 import { BaseSort } from "../types/types";
 import { QueryOptions, Types } from "mongoose";
@@ -286,9 +288,61 @@ class CourseService {
     }
 
     // Create
-    module.steps.push({ _id: new Types.ObjectId(), stepName, stepType });
+    module.steps.push({
+      stepName,
+      stepType,
+      content: {},
+    } as any);
 
     return (await course.save()).toObject();
+  }
+
+  async updateStepContent({
+    courseId,
+    moduleId,
+    stepId,
+    content,
+  }: UpdateStepContentService) {
+    const course = await courseModel.findById(courseId);
+
+    if (!course) {
+      throw new AppError("Курс не найден", ErrorCodes.COURSE_NOT_FOUND);
+    }
+
+    const module = course.modules.find(
+      (module) => module._id.toString() === moduleId
+    );
+
+    if (!module) {
+      throw new AppError(
+        "Модуль не найден",
+        ErrorCodes.COURSE_MODULE_NOT_FOUND
+      );
+    }
+
+    const step = module.steps.find((step) => step._id.toString() === stepId);
+
+    if (!step) {
+      throw new AppError(
+        "Шаг не найден",
+        ErrorCodes.COURSE_MODULE_STEP_NOT_FOUND
+      );
+    }
+
+    if (content[COURSE_MODULE_STEPS.Test] !== undefined) {
+      step.content[COURSE_MODULE_STEPS.Test] = content[
+        COURSE_MODULE_STEPS.Test
+      ] as any;
+      course.markModified("modules");
+    }
+
+    if (content[COURSE_MODULE_STEPS.Theory] !== undefined) {
+      step.content[COURSE_MODULE_STEPS.Theory] =
+        content[COURSE_MODULE_STEPS.Theory];
+      course.markModified("modules");
+    }
+
+    return await course.save();
   }
 
   async deleteModuleStep({

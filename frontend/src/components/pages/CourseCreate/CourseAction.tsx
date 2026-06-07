@@ -19,7 +19,7 @@ export const CourseAction = () => {
   const {
     data: { course: originalCourse } = {},
     isLoading: originalCourseIsLoading,
-  } = useGetCourseByIdQuery(courseId ?? skipToken);
+  } = useGetCourseByIdQuery(courseId ? { courseId } : skipToken);
 
   const isCreate = !courseId;
 

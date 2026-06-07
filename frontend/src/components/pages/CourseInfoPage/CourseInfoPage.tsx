@@ -9,6 +9,7 @@ import s from "./CourseInfoPage.module.css";
 import cn from "classnames";
 import { Review } from "./components/Review/Review";
 import { BACK_URL } from "../../../utils/constants";
+import { CourseStructure } from "./components/CourseStructure/CourseStructure";
 
 export const CourseInfoPage = () => {
   const { id } = useParams();
@@ -17,11 +18,13 @@ export const CourseInfoPage = () => {
     data: { course, author, reviews } = {},
     isLoading,
     isError,
-  } = useGetCourseByIdQuery(id ?? "");
+  } = useGetCourseByIdQuery({ courseId: id ?? "" });
 
-  const activeCourseIds = useAppSelector(({ user }) => user.activeCourseIds);
+  const { coursesProgress } = useAppSelector(({ user }) => user);
 
-  const isActiveCourse = activeCourseIds.includes(course?._id ?? "");
+  const isActiveCourse = coursesProgress.some(
+    (data) => data.progress < 100 && data.course._id === course?._id
+  );
 
   if (isLoading) return <div>Загрузка</div>;
 
@@ -68,10 +71,7 @@ export const CourseInfoPage = () => {
           </div>
         </Link>
 
-        <div className={s.modules}>
-          <div className={s.title}>Структура курса</div>
-          Пока нет
-        </div>
+        <CourseStructure />
 
         {!!reviews?.length && (
           <div className={s.reviews}>

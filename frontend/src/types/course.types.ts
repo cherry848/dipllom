@@ -18,10 +18,23 @@ export const COURSE_MODULE_STEP_TYPE_LABELS: Record<
   [COURSE_MODULE_STEPS.Theory]: "Теория",
 };
 
+export type CourseModuleStepTestContent = {
+  _id: string;
+  question: string;
+  multiple?: boolean;
+  variants: string[];
+};
+
+export type CourseModuleStepContent = {
+  [COURSE_MODULE_STEPS.Theory]: string;
+  [COURSE_MODULE_STEPS.Test]: CourseModuleStepTestContent[];
+};
+
 export type CourseModuleStep = {
   _id: string;
   stepName: string;
   stepType: CourseModuleStepsUnion;
+  content: CourseModuleStepContent;
 };
 
 export type CourseModule = {
@@ -53,6 +66,11 @@ export type GetCourseRes = {
   course: Course;
   author: User;
   reviews: ReviewWithAuthor[];
+};
+
+export type GetCourseReq = {
+  courseId: string;
+  fetchAnswers?: boolean;
 };
 
 export type GetCatalogCoursesRes = {
@@ -113,12 +131,18 @@ export type DeleteCourseModuleRes = {
   course: Course;
 };
 
+export type CreateOrUpdateStepContent = {
+  [COURSE_MODULE_STEPS.Theory]?: string;
+  [COURSE_MODULE_STEPS.Test]?: Omit<CourseModuleStepTestContent, "_id">[];
+};
+
 export type CreateOrUpdateCourseModuleStepReq = {
   courseId: string;
   moduleId: string;
   stepId?: string;
   stepName: string;
   stepType: CourseModuleStepsUnion;
+  content?: CreateOrUpdateStepContent;
 };
 
 export type CreateOrUpdateCourseModuleStepRes = {
